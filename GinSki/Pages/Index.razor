@@ -1,0 +1,16 @@
+﻿@page "/"
+@using GinSki.Components
+@using GinSki.Services
+@inject BehaviourService BehaviourService
+@inject SignIn SignIn
+
+<SignIn IsHiddenCard=BehaviourService.AdminMode></SignIn>
+
+<div class="Content">
+    
+</div>
+
+@code
+{
+   
+}

@@ -1,0 +1,206 @@
+﻿@page "/signIn"
+@using GinSki.Services
+
+@inject BehaviourService BehaviourService 
+@inject NavigationManager NavigationManager
+
+<div class="fon" hidden="@IsHiddenCard">
+    <div class="card" >
+        
+        <div class="cardRow">
+            <h3>@titleSign</h3>    
+        </div>
+
+        <div hidden="@hidenUsername" class="cardRow">
+            <p style="color: @itemColors[0]">Username</p>
+            <input class="inputCard" @bind-value="@itemData[0]"/>
+        </div>
+
+        <div hidden="@hidenEmail" class="cardRow">
+            <p style="color: @itemColors[1]">Email</p>
+            <input class="inputCard" @bind-value="@itemData[1]"/>
+        </div>
+
+
+        <div hidden="@hidenPassword" class="cardRow">
+            <p style="  color: @itemColors[2]">Password</p>
+            <input type="password" class="inputCard" @bind-value="@itemData[2]"/>
+        </div>
+
+        <div hidden="@hidenConfirmP" class="cardRow">
+            <p style="color: @itemColors[3]">Confirm password</p>
+            <input type="password" class="inputCard" @bind-value="@itemData[3]"/>
+        </div>
+
+        <div class="cardRow">
+            <button class="btnSign" @onclick="@isValidate">@titleSign</button>
+        </div>
+
+        <div class="cardRow">
+            <p>Already have an account? <span style="color: #4807ed" @onclick="@ChangeSignMethod">@txtSign</span></p>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public bool IsHiddenCard { get; set; }
+
+    [CascadingParameter] String coin { get; set; }
+    
+    // hidden rows
+    bool hidenUsername = false;
+    bool hidenEmail = true;
+    bool hidenPassword = false;
+    bool hidenConfirmP = true;
+
+    // input data
+    String itemUsername = ""; 
+    String itemPassword = "";
+    String itemEmail = "";
+    String itemConfPassword = "";
+    
+    String errTitle= "";
+    String errTxt = "";
+    
+    String titleSign = "Sign up";
+    String txtSign = "Sign in";
+    bool isSignUp = true;
+    
+    bool isError = false;
+    
+    // bool hideLabel = true;
+
+    String colorGray = "#494949";
+    String colorBlack = "black";
+    String colorGreen = "#6dce83";
+    String colorRed = "#fc3f1d";
+    String colorCurrent = "red";
+
+    String colorUsername = "";
+    String colorEmail = "";
+    String colorPassword = "";
+    String colorConfirmP = "";
+
+    List<String> itemColors = new List<string>(); 
+    List<String> itemData = new List<string>(); 
+    
+    protected override void OnInitialized()
+    {
+        itemColors = new List<string>() {colorUsername, colorEmail, colorPassword, colorConfirmP};
+        itemData = new List<string>() {itemUsername, itemEmail, itemPassword, itemConfPassword};
+
+        CheckFields(colorBlack, colorBlack);
+        ChangeSignMethod();
+    }
+    
+    public void isValidate()
+    {
+        if (isSignUp)
+        {
+            // CheckFields(colorGreen, colorRed);
+            // if (itemData[0] != "" && itemData[1] != "" && itemData[2] != ""  && itemData[3] != "" && itemData[2] == itemData[3])
+            // {
+            //     User newUser = new User();
+            //     newUser.Username = itemData[0]; 
+            //     newUser.Email = itemData[1];
+            //     newUser.Password = itemData[2];
+            //     
+            //     UserDbConnection.AddToDatabase(newUser);
+            //     userConnect.isLoginUser = newUser;
+            //     NavigationManager.NavigateTo("profile");
+            //     IsActiveCard = true;
+            // }
+            // else
+            // {
+            //     isError = true;
+            //     errTitle = "error3";
+            //     errTxt = "text3";
+            // }
+            
+            IsHiddenCard = true;
+            BehaviourService.AdminMode = true;
+        }
+        else
+        {
+            itemColors[0] = colorBlack;
+            itemColors[2] = colorBlack;
+            if (itemData[0] != "" && itemData[2] != "")
+            {
+               //  userConnect.isLoginUser = UserDbConnection.GetUserByUsernamePassword(itemData[0], itemData[2]);
+
+                // if (userConnect.isLoginUser != null)
+                // {
+                //     NavigationManager.NavigateTo("profile");
+                //     IsActiveCard = true;
+                // }
+                // else
+                // {
+                //     errTitle = "error1";
+                //     errTxt = "text1";
+                //     isError = true;
+                // }
+            }
+            else
+            {
+                errTitle = "error2";
+                errTxt = "text2";
+                isError = true;
+            }
+            
+            IsHiddenCard = true;
+            BehaviourService.AdminMode = true;
+        }
+    }
+    
+    void CheckFields(String colorY, String colorN)
+    {
+        for (var i = 0; i < itemData.Count; i++)
+        {
+            if (itemData[i] == "")
+            {
+                itemColors[i] = colorN;
+            }
+            else
+            {
+                itemColors[i] = colorGreen;
+                
+                if (itemData[2] == itemData[3])
+                {
+                    itemColors[2] = colorGreen;
+                    itemColors[3] = colorGreen;
+                }
+                else
+                {
+                    itemColors[2] = colorRed;
+                    itemColors[3] = colorRed;
+                }
+            }
+        }
+        StateHasChanged();
+    }
+
+    void ChangeSignMethod()
+    {
+        if (isSignUp)
+        {
+            isSignUp = false;
+            titleSign = "Sign in";
+            txtSign = "Sign up";
+            
+            
+            hidenEmail = true;
+            hidenConfirmP = true;
+        }
+        else
+        {
+            isSignUp = true;
+            titleSign = "Sign up";
+            txtSign = "Sign in";
+
+            hidenEmail = false;
+            hidenConfirmP = false;
+        }
+    }
+}
