@@ -1,0 +1,66 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+.card {
+    display: flex;
+    background: lightsteelblue;
+    margin: 10px;
+}
+
+.content1 {
+    display: flex;
+    background: lightgoldenrodyellow;
+    flex-direction: row;
+    justify-content: right;
+}
+
+
+
+.content2 {
+    display: flex;
+    flex-direction: column;
+}
+
+.tableHeader {
+    display: flex;
+}
+
+.row1 {
+    display: flex;
+    background: #20c997;
+    margin: 3px;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.boxRow {
+    display: flex;
+    background: lightskyblue;
+    margin: 3px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+
+
+.boxRow div {
+    display: flex;
+    flex-direction: row;
+    margin: 3px;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    background: lightslategray;
+    
+}
+
+p {
+    display: flex;
+    align-items: center;
+}

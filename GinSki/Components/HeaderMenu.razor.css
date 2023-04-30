@@ -1,0 +1,20 @@
+﻿* {
+ margin: 0;
+ padding: 0;
+}
+
+.headerMenu
+{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 55px;
+    width: 100%;
+    background: lightgreen;
+}
+
+.block {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

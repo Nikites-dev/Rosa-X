@@ -1,0 +1,134 @@
+﻿@using GinSki.Models
+@inject Inventory Inventory
+@inject InventoryRental InventoryRental
+
+<div class="card">
+    <div class="content1">
+        <div class="row1">
+            <p>icon</p>
+            <p>10</p>    
+        </div>
+        
+        <div class="row1">
+            <p>icon</p>
+            <p>10</p>    
+        </div>
+        
+        
+    </div>
+
+    <div class="content2">
+        
+        <div class="tableHeader">
+            
+            <div style="width: 50px">
+                №
+            </div>
+            
+            
+            <div style="width: 350px">
+                ФИО
+            </div>
+
+            <div style="width: 150px">
+                Телефон
+            </div>
+
+            <div style="width: 150px">
+                Скипасс
+            </div>
+
+            <div>
+                Кол-во снаряжения
+            </div>
+
+
+        </div>
+        <div class="tableContent">
+            @foreach (var item in listActiveUsers)
+                    {
+                        <div class="boxRow">
+                            
+                            <div style="width: 50px">
+                                 <p>1</p>
+                            </div>
+                            
+                            <div style="width: 350px">
+                                <p>@item.LName</p>
+                                <p>@item.FName</p>
+                                <p>@item.PName</p>
+                            </div>
+
+                            <div style="width: 150px">
+                                <p>@item.Phone</p>
+                            </div>
+
+                            <div style="width: 150px">
+                                <p>4ч. 00 мин.</p>
+                            </div>
+
+                            <div style="width: 150px">
+                                <p>@item.InventoryRental.listInventory.Count.ToString()</p>
+                            </div>
+
+
+                        </div>
+                    }
+        </div>
+        
+    </div>
+
+</div>
+
+@code {
+    public String Name { get; set; }
+
+   
+    public Skipass skipass = new Skipass();
+
+
+    public List<Client> listActiveUsers = new List<Client>();
+
+
+    protected override void OnInitialized()
+    {
+        skipass.CountDescents = 9;
+        skipass.StartDateTime = DateTime.Now;
+        skipass.StartDateTime = DateTime.Now;
+
+        Inventory inventory = new Inventory();
+        inventory.Name = "";
+        inventory.IdTypeInverory = 2;
+        inventory.Count = 10;
+        inventory.Height = 183;
+        inventory.Count = 200;
+        inventory.Size = 12;
+        inventory.PriceOfHour = 1200;
+        
+        InventoryRental inventoryRental = new InventoryRental();
+        inventoryRental.listInventory.Add(inventory);
+        inventoryRental.listInventory.Add(inventory);
+        inventoryRental.listInventory.Add(inventory);
+        
+        inventoryRental.DateArend = DateTime.Now;
+  
+
+      
+        
+        Client client = new Client();
+        client.FName = "Nikita";
+        client.LName = "Petrov";
+        client.PName = "Sergeevic";
+        client.Email = "petrovnx@gmail.com";
+        client.Phone = "+79968508410";
+        client.Skipass = skipass;
+        client.DateBirth = DateTime.Now;
+        client.InventoryRental = inventoryRental;
+        
+        listActiveUsers.Add(client);
+        listActiveUsers.Add(client);
+        listActiveUsers.Add(client);
+        listActiveUsers.Add(client);
+        listActiveUsers.Add(client);
+    }
+}

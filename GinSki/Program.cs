@@ -6,6 +6,8 @@ using GinSki.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -21,12 +23,16 @@ builder.Services.AddSingleton<Admin>();
 builder.Services.AddSingleton<Client>();
 builder.Services.AddSingleton<InvertoryType>();
 builder.Services.AddSingleton<Inventory>();
+builder.Services.AddSingleton<Inventory>();
 builder.Services.AddSingleton<InventoryRental>();
 builder.Services.AddSingleton<Skipass>();
 
+builder.Services.AddSingleton<HeaderMenu>();
+builder.Services.AddSingleton<ActiveGuest>();
 builder.Services.AddSingleton<SignIn>();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,3 +1,5 @@
+using System;
+
 namespace GinSki.Data
 {
     public class WeatherForecast
@@ -6,7 +8,7 @@ namespace GinSki.Data
 
         public int TemperatureC { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        public int TemperatureF => 32 + (int) (TemperatureC / 0.5556);
 
         public string? Summary { get; set; }
     }

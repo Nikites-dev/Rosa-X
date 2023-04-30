@@ -1,0 +1,14 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    background: red;
+}
+
+.Content {
+    display: flex;
+    align-items: center;
+    margin: auto;
+    justify-content: center;
+    background: lightseagreen;
+    width: 70%;
+}

@@ -3,12 +3,18 @@
 @using GinSki.Services
 @inject BehaviourService BehaviourService
 @inject SignIn SignIn
+@inject HeaderMenu HeaderMenu
 
-<SignIn IsHiddenCard=BehaviourService.AdminMode></SignIn>
+
+<HeaderMenu Title="Активные гости на склоне"></HeaderMenu>
 
 <div class="Content">
-    
+    <ActiveGuest></ActiveGuest>
 </div>
+
+
+
+<SignIn IsHiddenCard=BehaviourService.AdminMode></SignIn>
 
 @code
 {

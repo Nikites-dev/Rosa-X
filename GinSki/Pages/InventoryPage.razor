@@ -1,0 +1,61 @@
+﻿@page "/InventoryPage"
+@using GinSki.Components
+@using GinSki.Models
+@inject HeaderMenu HeaderMenu
+
+<HeaderMenu Title="Инвентарь"></HeaderMenu>
+
+<div class="card">
+    <div class="content1">
+        <button>Add</button>
+        <button>sort</button>
+        <button>sort</button>
+    </div>
+    
+    <div class="content2">
+        <div class="tableHeader">
+            <p style="width: 50px">№</p>
+            <p style="width: 200px">Тип инвентаря</p>
+            <p style="width: 200px">Название</p>
+            <p>цена за час</p>
+        </div>    
+        
+        <div class="tableContent">
+            @if (listInventory != null)
+            {
+                @foreach (var item in listInventory)
+                {
+                    <div class="tableRow">
+                        <p style="width: 50px">1</p>
+                        <p style="width: 200px">@item.IdTypeInverory.ToString()</p>
+                        <p style="width: 200px">@item.Name</p>
+                        <p>@item.PriceOfHour.ToString() p.</p>
+                    </div>
+                }    
+            }
+        </div>
+    </div>
+    
+</div>
+
+@code {
+
+    List<Inventory> listInventory = new List<Inventory>();
+    protected override void OnInitialized()
+    {
+        Inventory inventory = new Inventory();
+        inventory.Name = "Шлем Columbia";
+        inventory.IdTypeInverory = 2;
+        inventory.Count = 10;
+        inventory.Height = 183;
+        inventory.Count = 200;
+        inventory.Size = 12;
+        inventory.PriceOfHour = 1200;
+        
+        listInventory.Add(inventory);
+        listInventory.Add(inventory);
+        listInventory.Add(inventory);
+        listInventory.Add(inventory);
+        listInventory.Add(inventory);
+    }
+}

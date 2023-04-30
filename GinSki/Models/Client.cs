@@ -10,5 +10,8 @@ namespace GinSki.Models
         public DateTime DateBirth { get; set; }
         public String Phone { get; set; }
         public String Email { get; set; }
+
+        public InventoryRental InventoryRental { get; set; }
+        public Skipass Skipass { get; set; }
     }
 }
