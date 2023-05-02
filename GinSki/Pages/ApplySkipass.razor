@@ -1,7 +1,165 @@
 ﻿@page "/applySkipass"
+@using GinSki.Models
+@using System.Linq.Expressions
 
-<h3>ApplySkipass</h3>
+
+<h3>Оформление скипасса</h3>
+<i class="fa-user"></i>
+<h2>@text</h2>
+<span class="fa-apple"></span>
+
+
+<div class="card">
+    
+    <div>
+        <button @onclick="@SelectClient">Выбрать</button>
+    </div>
+    
+    <div class="cardUser">
+        <div class="boxUsers" hidden="@isNewClient">
+            @if (!isNewClient)
+            {
+                <div>
+                    <input @bind="text" @bind:event="oninput" @onkeyup="SearchChanged">
+                    @if (listClients != null || listClients.Count == 0)
+                    {
+                        @foreach (var item in listClients)
+                        {
+                            <div class="rowClient">
+                                <p>@item.LName</p>
+                                <p>@item.FName</p>
+                                <p>@item.PName</p>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            <p>Добавить гостя</p>
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <div class="cardApply">
+        <p>Оформление</p>
+        <div class="cardContentApply">
+            <p>Клиент</p>
+            <div class="cardClient">
+                <div>
+                    <p>Фамилия:</p>
+                    <p>Иванов</p>
+                </div>
+                <div>
+                    <p>Имя:</p>
+                    <p>Иван</p>
+                </div>
+                <div>
+                    <p>Отчество:</p>
+                    <p>Иванович</p>
+                </div>
+
+                <div>
+                    <p>Дата рождения:</p>
+                    <p>18.03.2002</p>
+                </div>
+
+                <div>
+                    <p>Телефон:</p>
+                    <p>+79968508410</p>
+                </div>
+            </div>
+
+            <div class="cardClient">
+                <div>
+                    <p>Количество спусков по склону:</p>
+                    <p>12</p>
+                </div>
+
+                <div>
+                    <p>Дейтсвие скиппаса</p>
+                    <p>01.01.2023 – 01.01.2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button>Apply</button>
+    </div>
+</div>
 
 @code {
+    Skipass _skipass;
+    List<Client> listClients = new List<Client>();
+    Client client = new Client();
+    Client client2 = new Client();
+    Client client3 = new Client();
+    bool isNewClient = false;
+    String text = "ff";
+
+    protected override void OnInitialized()
+    {
+        client.FName = "Nikita";
+        client.LName = "Petrov";
+        client.PName = "Sergeevic";
+        client.Email = "petrovnx@gmail.com";
+        client.Phone = "+79968508410";
+        client.Skipass = null;
+        client.DateBirth = DateTime.Now;
+        client.InventoryRental = null;
+
+        client2.FName = "Maxim";
+        client2.LName = "Ivanov";
+        client2.PName = "Eduardovich";
+        client2.Email = "maxiven@gmail.com";
+        client2.Phone = "+7935348573";
+        client2.Skipass = null;
+        client2.DateBirth = DateTime.Now;
+        client2.InventoryRental = null;
+        
+        client3.FName = "Vasya";
+        client3.LName = "Ershov";
+        client3.PName = "Vladislovovich";
+        client3.Email = "ershich@mail.ru";
+        client3.Phone = "+7973847385";
+        client3.Skipass = null;
+        client3.DateBirth = DateTime.Now;
+        client3.InventoryRental = null;
+        
+        listClients.Add(client);
+        listClients.Add(client2);
+        listClients.Add(client3);
+     
+    }
     
+    private void SearchChanged()
+    {
+        
+        if (text == "")
+        {
+            listClients.Clear();
+            listClients.Add(client);
+            listClients.Add(client2);
+            listClients.Add(client3);
+        }
+        else
+        {
+            listClients.Clear();
+            listClients.Add(client);
+            listClients.Add(client2);
+            listClients.Add(client3);
+            
+            
+            listClients = listClients.Where(x => x.LName.Contains(text) || x.FName.Contains(text) || x.PName.Contains(text)).ToList();
+        }
+    }
+
+    void SelectClient()
+    {
+        isNewClient = isNewClient == false ? true : false;
+    }
+
 }
