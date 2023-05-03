@@ -1,7 +1,6 @@
 ﻿* {
     padding: 0;
     margin: 0;
-    font-family: "Montserrat Medium";
     box-sizing: border-box;
 }
 
@@ -19,7 +18,7 @@ form {
     margin: 0 auto;
 }
 
-input {
+.inputSearch {
     width: 100%;
     height: 42px;
     padding-left: 10px;
@@ -42,18 +41,29 @@ input {
     margin: 3px;
 }
 
-.rowClient {
+.rowClientsBtn {
     display: flex;
     flex-direction: row;
     background: lightsteelblue;
     margin: 3px;
+    width: 100%;
 }
 
-.rowClient p {
+.rowClientsBtn p {
+    display: flex;
+    padding: 3px;
+    width: 130px;
+}
+
+.headerClients {
+    display: flex;
+}
+
+.headerClients p {
+    display: flex;
+    width: 130px;
     padding: 3px;
 }
-
-
 
 .cardApply {
     display: flex;
@@ -85,3 +95,15 @@ input {
 
 
 
+.cardClientRow {
+    display: flex;
+    flex-direction: column;
+}
+
+.cardClientRow p {
+    width: 200px;
+}
+
+.cardClientRow input {
+
+}
