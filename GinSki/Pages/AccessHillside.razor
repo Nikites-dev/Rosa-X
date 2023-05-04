@@ -1,7 +1,28 @@
 ﻿@page "/accessHillside"
+@using GinSki.Components
+
+@inject SkipassComponent SkipassComponent;
 
 <h3>AccessHillside</h3>
 
+<div>
+    <button>Инвертарь</button>
+    <button>Скиппас</button>
+</div>
+
+
+<div>
+    @if (isCheckSkipass)
+    {
+        <SkipassComponent isAllFunctions="true"></SkipassComponent>        
+    }
+    else
+    {
+        
+    }
+</div>
+
+
 @code {
-    
+    public bool isCheckSkipass { get; set; }
 }

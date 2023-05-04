@@ -9,14 +9,12 @@
 <div class="card">
     
     <div>
-        @* @if (isExtensionSkipass) *@
-        @* { *@
-        @*     <button @onclick="@ShowListClient">Выбрать</button>     *@
-        @* } *@
-        @* else *@
-        @* { *@
-        @*     <button @onclick="@SelectNewClient">Новый</button>     *@
-        @* } *@
+        @if (isAllFunctions)
+        {
+            <button @onclick="@ShowListClient">Выбрать</button>
+       
+            <button @onclick="@SelectNewClient">Новый</button>
+        }
         
     </div>
     
@@ -143,6 +141,9 @@
 
     [Parameter]
     public bool isExtensionSkipass { get; set; }
+    
+    [Parameter]
+    public bool isAllFunctions { get; set; }
 
     protected override void OnInitialized()
     {
