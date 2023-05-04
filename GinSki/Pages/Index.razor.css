@@ -1,14 +1,33 @@
 ﻿* {
     margin: 0;
     padding: 0;
-    background: red;
+    background: #e3c5c5;
 }
+
 
 .Content {
     display: flex;
-    align-items: center;
-    margin: auto;
-    justify-content: center;
-    background: lightseagreen;
+    flex-direction: column;
+    background: lightgreen;
+    margin:100px auto;
+    align-items: start;
     width: 70%;
+}
+
+.card {
+    display: flex;
+    background: lightsteelblue;
+    margin: 3px;
+}
+
+.cardRow {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 3px;
+    background: lightpink;
+}
+
+.cardRow p:first-child{
+    display: flex;
+    width: 150px;
 }
