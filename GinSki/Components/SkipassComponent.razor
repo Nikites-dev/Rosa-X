@@ -1,0 +1,278 @@
+﻿@using GinSki.Models
+@using System.Linq.Expressions
+
+<h3>Оформление скипасса</h3>
+<i class="fa-user"></i>
+<h2>@text</h2>
+<span class="fa-apple"></span>
+
+<div class="card">
+    
+    <div>
+        @* @if (isExtensionSkipass) *@
+        @* { *@
+        @*     <button @onclick="@ShowListClient">Выбрать</button>     *@
+        @* } *@
+        @* else *@
+        @* { *@
+        @*     <button @onclick="@SelectNewClient">Новый</button>     *@
+        @* } *@
+        
+    </div>
+    
+    <div class="cardUser">
+        <div class="boxUsers" hidden="@(isShowCardUsers ? false : true)">
+            @if (isShowCardUsers)
+            {
+                <div>
+                    <input class="inputSearch" @bind="text" @bind:event="oninput" @onkeyup="SearchChanged">
+                    @if (listClients != null || listClients.Count == 0)
+                    {
+                        <div class="headerClients">
+                            <p>Фамилия</p>
+                            <p>Имя</p>
+                            <p>Отчество</p>
+                            <p>Дата рождения</p>
+                            <p>телефон</p>
+                            <p>Email</p>
+                        </div>
+                        
+                        @foreach (var item in listClients)
+                        {
+                            <button class="rowClientsBtn" @onclick="() => SelectClient(item)">
+                                    <p>@item.LName</p>
+                                    <p>@item.FName</p>
+                                    <p>@item.PName</p>    
+                                    <p>@item.DateBirth.ToShortDateString()</p>    
+                                    <p>@item.Phone</p>    
+                                    <p>@item.Email</p>    
+                            </button>
+                        }
+                    }
+                    else
+                    {
+                        <div>
+                            <p>Добавить гостя</p>
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <div class="cardApply">
+        <p>Оформление</p>
+        <div class="cardContentApply">
+            <p>Клиент</p>
+            <div class="cardClient">
+                <div class="cardClientRow">
+                    <p>Фамилия:</p>
+                    <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.LName"/>
+                </div>
+                <div class="cardClientRow">
+                    <p>Имя:</p>
+                    <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.FName"/>
+                </div>
+                <div class="cardClientRow">
+                    <p>Отчество:</p>
+                     <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.PName"/>
+                </div>
+
+                <div class="cardClientRow">
+                    <p>Дата рождения:</p>
+                     <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.DateBirth"/>
+                </div>
+
+                <div class="cardClientRow">
+                    <p>Email:</p>
+                    <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.Email"/>
+                </div>
+                
+                
+                <div class="cardClientRow">
+                    <p>Телефон:</p>
+                    <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.Phone"/>
+                </div>
+                @if (isNewClient)
+                {
+                    <button @onclick="AddNewClient">Добавить</button>    
+                }
+                
+            </div>
+
+            <div class="cardClient">
+                <p>Скипасс</p>
+                <div class="cardClientRow">
+                    <p>Количество спусков:</p>
+                    @if (@crntClient.Skipass != null)
+                    {
+                        <input class="inputUser" @bind-value="@crntClient.Skipass.CountDescents"/>
+                    }
+
+                </div>
+
+                <div class="cardClientRow">
+                    <p>Дейтсвие скиппаса</p>
+                    @if (@crntClient.Skipass != null)
+                    {
+                        <input class="inputUser" @bind-value="@crntClient.Skipass.StartDateTime"/>
+                        <input class="inputUser" @bind-value="@crntClient.Skipass.EndDateTime"/>
+                    }
+                    @**  <p>01.01.2023 – 01.01.2024</p> **@
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <button>Apply</button>
+    </div>
+</div>
+
+@code {
+    Skipass _skipass;
+    List<Client> listClients = new List<Client>();
+    Client client = new Client();
+    Client client2 = new Client();
+    Client client3 = new Client();
+    bool isNewClient = true;
+    bool isShowCardUsers = true;
+    String text = "ff";
+    Client crntClient = new Client();
+
+
+    [Parameter]
+    public bool isExtensionSkipass { get; set; }
+
+    protected override void OnInitialized()
+    {
+        DateTime date = Convert.ToDateTime("2020-12-31");
+
+        Skipass skipass = new Skipass();
+        skipass.CountDescents = 34;
+        skipass.StartDateTime = DateTime.Now;
+        skipass.EndDateTime = DateTime.Now + TimeSpan.FromHours(2360);
+        
+        client.FName = "Victor";
+        client.LName = "Victorov";
+        client.PName = "Victorovich";
+        client.Email = "petrovnx@gmail.com";
+        client.Phone = "+79968508410";
+        client.Skipass = null;
+        client.DateBirth = date;
+        client.InventoryRental = null;
+
+        client2.FName = "Maxim";
+        client2.LName = "Ivanov";
+        client2.PName = "Eduardovich";
+        client2.Email = "maxiven@gmail.com";
+        client2.Phone = "+7935348573";
+        client2.Skipass = skipass;
+        client2.DateBirth = DateTime.Now;
+        client2.InventoryRental = null;
+        
+        client3.FName = "Vasya";
+        client3.LName = "Ershov";
+        client3.PName = "Vladislovovich";
+        client3.Email = "ershich@mail.ru";
+        client3.Phone = "+7973847385";
+        client3.Skipass = null;
+        client3.DateBirth = Convert.ToDateTime("2022-04-23");
+        client3.InventoryRental = null;
+        
+        listClients.Add(client);
+        listClients.Add(client2);
+        listClients.Add(client3);
+
+
+        ChangeElemetsUserReg();
+    }
+
+    void ChangeElemetsUserReg()
+    {
+        isNewClient = isExtensionSkipass;
+
+        if (isNewClient)
+        {
+            SelectNewClient();
+            
+        }
+        else
+        {
+            ShowListClient();
+        }
+    }
+
+    private void SearchChanged()
+    {
+        
+        if (text == "")
+        {
+            listClients.Clear();
+            listClients.Add(client);
+            listClients.Add(client2);
+            listClients.Add(client3);
+        }
+        else
+        {
+            listClients.Clear();
+            listClients.Add(client);
+            listClients.Add(client2);
+            listClients.Add(client3);
+            
+            
+            listClients = listClients.Where(
+                x => x.LName.Contains(text) || 
+                x.FName.Contains(text) || 
+                x.PName.Contains(text) ||
+                x.Email.Contains(text) ||
+                x.Phone.Contains(text) ||
+                x.DateBirth.ToShortDateString().Contains(text)
+                ).ToList();
+        }
+    }
+
+    void ShowListClient()
+    {
+        isNewClient = false;
+        isShowCardUsers = true;
+    }
+
+    void SelectClient(Client client)
+    {
+        crntClient = new Client();
+        crntClient = client;
+
+        if (crntClient.Skipass == null)
+        {
+            Skipass newSkipass = new Skipass();
+            newSkipass.CountDescents = 0;
+
+            crntClient.Skipass = newSkipass;
+        }
+        isShowCardUsers = false;
+    }
+
+    void SelectNewClient()
+    {
+        isNewClient = true;
+
+        Client newClient = new Client();
+        crntClient = newClient;
+        isShowCardUsers = false;
+    }
+    
+    void AddNewClient()
+    {
+        isNewClient = false;
+        isShowCardUsers = false;
+        
+        
+        Skipass newSkipass = new Skipass();
+        newSkipass.CountDescents = 0;
+
+        crntClient.Skipass = newSkipass; 
+        
+        text = crntClient.Email;
+    }
+}

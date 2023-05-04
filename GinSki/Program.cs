@@ -27,11 +27,13 @@ builder.Services.AddSingleton<Inventory>();
 builder.Services.AddSingleton<InventoryRental>();
 builder.Services.AddSingleton<Skipass>();
 
+builder.Services.AddSingleton<SkipassComponent>();
 builder.Services.AddSingleton<HeaderMenu>();
 builder.Services.AddSingleton<ActiveGuest>();
 builder.Services.AddSingleton<SignIn>();
 
 var app = builder.Build();
+
 
 
 // Configure the HTTP request pipeline.
