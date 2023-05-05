@@ -1,6 +1,7 @@
 ﻿@page "/InventoryPage"
 @using GinSki.Components
 @using GinSki.Models
+@using GinSki.MongoDB
 @inject HeaderMenu HeaderMenu
 
 <HeaderMenu Title="Инвентарь"></HeaderMenu>
@@ -44,18 +45,17 @@
     protected override void OnInitialized()
     {
         Inventory inventory = new Inventory();
-        inventory.Name = "Шлем Columbia";
-        inventory.IdTypeInverory = 2;
-        inventory.Count = 10;
-        inventory.Height = 183;
-        inventory.Count = 200;
-        inventory.Size = 12;
-        inventory.PriceOfHour = 1200;
+        inventory.Name = "Лыжи Stels";
+        inventory.IdTypeInverory = 1;
+        inventory.Count = 6;
+        inventory.Height = 143;
+        inventory.Count = 120;
+        inventory.Size = 20;
+        inventory.PriceOfHour = 1500;
         
-        listInventory.Add(inventory);
-        listInventory.Add(inventory);
-        listInventory.Add(inventory);
-        listInventory.Add(inventory);
-        listInventory.Add(inventory);
+        // listInventory.Add(inventory);
+        // InventoryDbConnection.AddToDatabase(inventory);
+
+        listInventory = InventoryDbConnection.GetListInventory();
     }
 }
