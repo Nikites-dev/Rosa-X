@@ -1,13 +1,13 @@
 ﻿@page "/accessHillside"
 @using GinSki.Components
-
 @inject SkipassComponent SkipassComponent;
+@inject RentalInventory RentalInventory
 
 <h3>AccessHillside</h3>
 
 <div>
-    <button>Инвертарь</button>
-    <button>Скиппас</button>
+    <button @onclick="() => SwitchComponent(true)">Инвентарь</button>
+    <button @onclick="() => SwitchComponent(false)">Скиппас</button>
 </div>
 
 
@@ -18,11 +18,18 @@
     }
     else
     {
-        
+        <SkipassComponent isRentalInventory="true"></SkipassComponent>
     }
 </div>
 
 
 @code {
     public bool isCheckSkipass { get; set; }
+
+
+    void SwitchComponent(bool isSwitch)
+    {
+        isCheckSkipass = isSwitch;
+    }
+
 }

@@ -100,25 +100,65 @@
             </div>
 
             <div class="cardClient">
-                <p>Скипасс</p>
-                <div class="cardClientRow">
-                    <p>Количество спусков:</p>
-                    @if (@crntClient.Skipass != null)
-                    {
-                        <input class="inputUser" @bind-value="@crntClient.Skipass.CountDescents"/>
-                    }
+                
+                @if (@isRentalInventory)
+                {
+                    <p>Аренда инвентаря</p>
+                    <div class="cardClientRow">
+                        <p>Доступный инвентарь:</p>
+                        @if (@crntClient.Skipass != null)
+                        {
+                            <input class="inputUser" @bind-value="@crntClient.Skipass.CountDescents"/>
+                        }
 
-                </div>
+                    </div>
 
-                <div class="cardClientRow">
-                    <p>Дейтсвие скиппаса</p>
-                    @if (@crntClient.Skipass != null)
-                    {
-                        <input class="inputUser" @bind-value="@crntClient.Skipass.StartDateTime"/>
-                        <input class="inputUser" @bind-value="@crntClient.Skipass.EndDateTime"/>
-                    }
-                    @**  <p>01.01.2023 – 01.01.2024</p> **@
-                </div>
+                    <div class="cardClientRow">
+                        <button>Выбрать</button>
+                    </div>
+                    
+                    <div class="cardClientRow">
+                        <p>Дейтсвие скиппаса</p>
+                        @if (@crntClient.InventoryRental != null)
+                        {
+                            <div>
+                                <p>Цена за час</p>
+                                <p>@crntClient.InventoryRental.listInventory.Count.ToString())</p>
+                            </div>
+                            
+                            <div>
+                                <p>Время</p>
+                                <p>@crntClient.InventoryRental.DateArend.Date.ToShortDateString()</p>
+                            </div>
+                            <p></p>
+                        }
+                        @**  <p>01.01.2023 – 01.01.2024</p> **@
+                    </div>
+                }
+                else
+                {
+                    <p>Скипасс</p>
+                    <div class="cardClientRow">
+                        <p>Количество спусков:</p>
+                        @if (@crntClient.Skipass != null)
+                        {
+                            <input class="inputUser" @bind-value="@crntClient.Skipass.CountDescents"/>
+                        }
+
+                    </div>
+
+                    <div class="cardClientRow">
+                        <p>Дейтсвие скиппаса</p>
+                        @if (@crntClient.Skipass != null)
+                        {
+                            <input class="inputUser" @bind-value="@crntClient.Skipass.StartDateTime"/>
+                            <input class="inputUser" @bind-value="@crntClient.Skipass.EndDateTime"/>
+                        }
+                        @**  <p>01.01.2023 – 01.01.2024</p> **@
+                    </div>
+                }
+                
+                
             </div>
         </div>
     </div>
@@ -144,6 +184,9 @@
     
     [Parameter]
     public bool isAllFunctions { get; set; }
+    
+    [Parameter]
+    public bool isRentalInventory { get; set; }
 
     protected override void OnInitialized()
     {

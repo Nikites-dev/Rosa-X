@@ -31,6 +31,7 @@ builder.Services.AddSingleton<SkipassComponent>();
 builder.Services.AddSingleton<HeaderMenu>();
 builder.Services.AddSingleton<ActiveGuest>();
 builder.Services.AddSingleton<SignIn>();
+builder.Services.AddSingleton<RentalInventory>();
 
 var app = builder.Build();
 
