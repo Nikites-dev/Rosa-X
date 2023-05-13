@@ -14,14 +14,11 @@ namespace GinSki.Models
         [BsonIgnoreIfDefault]
         public int IdTypeInverory { get; set; }
         [BsonIgnoreIfDefault]
-        public int Height { get; set; }
+        public int HeightSize { get; set; }
+    
         [BsonIgnoreIfDefault]
-        public int Size { get; set; }
-        [BsonIgnoreIfDefault]
-        
         public int PriceOfHour { get; set; }
-        [BsonIgnoreIfDefault]
-        public int Count { get; set; }
-        
+
+
     }
 }

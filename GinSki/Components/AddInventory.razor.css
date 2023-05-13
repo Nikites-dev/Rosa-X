@@ -1,0 +1,43 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+.field {
+    display: flex;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+   background: lightskyblue;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.content1 {
+    display: flex;
+    flex-direction: column;
+    background: lightgoldenrodyellow;
+    flex-direction: row;
+}
+
+.content2 {
+    display: flex;
+    flex-direction: column;
+    background: lightsteelblue;
+    flex-direction: row;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    background: lightsalmon;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    background: lightsteelblue;
+    margin: 3px;
+}

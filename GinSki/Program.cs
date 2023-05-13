@@ -19,6 +19,7 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton<BehaviourService>();
 
+
 builder.Services.AddSingleton<Admin>();
 builder.Services.AddSingleton<Client>();
 builder.Services.AddSingleton<InvertoryType>();
@@ -32,6 +33,7 @@ builder.Services.AddSingleton<HeaderMenu>();
 builder.Services.AddSingleton<ActiveGuest>();
 builder.Services.AddSingleton<SignIn>();
 builder.Services.AddSingleton<RentalInventory>();
+builder.Services.AddSingleton<AddInventory>();
 
 var app = builder.Build();
 

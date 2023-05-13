@@ -1,61 +1,87 @@
-﻿@page "/InventoryPage"
+﻿@page "/inventoryPage"
 @using GinSki.Components
 @using GinSki.Models
 @using GinSki.MongoDB
+@using GinSki.Services
 @inject HeaderMenu HeaderMenu
+@inject AddInventory AddInventory
+@inject InvertoryType InvertoryType
 
-<HeaderMenu Title="Инвентарь"></HeaderMenu>
+
+<HeaderMenu Title="Inventory"></HeaderMenu>
 
 <div class="card">
     <div class="content1">
-        <button>Add</button>
-        <button>sort</button>
-        <button>sort</button>
+       @if (listInventoryType != null || listInventoryType.Count != 0)
+                       {
+                           <select class="selectInterest" @onchange="@SortChanged">
+                                <option value="">Все</option>
+                               @foreach (var interest in listInventoryType)
+                               {
+                                   <option value="@interest">@interest</option>
+                               }
+                           </select>
+                       }
     </div>
-    
+
     <div class="content2">
         <div class="tableHeader">
             <p style="width: 50px">№</p>
             <p style="width: 200px">Тип инвентаря</p>
             <p style="width: 200px">Название</p>
             <p>цена за час</p>
-        </div>    
-        
+        </div>
+
         <div class="tableContent">
             @if (listInventory != null)
             {
                 @foreach (var item in listInventory)
                 {
                     <div class="tableRow">
-                        <p style="width: 50px">1</p>
-                        <p style="width: 200px">@item.IdTypeInverory.ToString()</p>
+                        <p style="width: 200px">@InvertoryType.listTypesInverory[item.IdTypeInverory]</p>
                         <p style="width: 200px">@item.Name</p>
                         <p>@item.PriceOfHour.ToString() p.</p>
                     </div>
-                }    
+                }
             }
         </div>
     </div>
-    
+        <AddInventory onDataChanged="@OnDataChanged"></AddInventory>
 </div>
 
-@code {
 
+
+@code {
+    String selectInventory = "";
+    bool isShowAddInv = false;
+    
     List<Inventory> listInventory = new List<Inventory>();
+    List<String> listInventoryType = new List<String>();
+
     protected override void OnInitialized()
     {
-        Inventory inventory = new Inventory();
-        inventory.Name = "Лыжи Stels";
-        inventory.IdTypeInverory = 1;
-        inventory.Count = 6;
-        inventory.Height = 143;
-        inventory.Count = 120;
-        inventory.Size = 20;
-        inventory.PriceOfHour = 1500;
-        
-        // listInventory.Add(inventory);
-        // InventoryDbConnection.AddToDatabase(inventory);
-
+        listInventoryType = InvertoryType.listTypesInverory.ToList();
         listInventory = InventoryDbConnection.GetListInventory();
     }
+    
+    private void OnDataChanged(String text)
+    {
+        listInventory = InventoryDbConnection.GetListInventory();
+        StateHasChanged();
+    }
+
+   void SortChanged(ChangeEventArgs e)
+   {
+       selectInventory = e.Value.ToString();
+       if (selectInventory == "")
+       {
+           listInventory = InventoryDbConnection.GetListInventory();
+       }
+       else
+       {
+           listInventory = InventoryDbConnection.GetListInventory();
+           listInventory = listInventory.Where(x => x.IdTypeInverory == InvertoryType.listTypesInverory.FindIndex(x => x == selectInventory)).ToList();
+       }
+   }
+
 }

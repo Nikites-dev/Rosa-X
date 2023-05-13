@@ -1,76 +1,82 @@
-﻿using GinSki.Models;
+﻿using System;
+using System.Collections.Generic;
+using GinSki.Models;
 using MongoDB.Driver;
 
-namespace GinSki.MongoDB;
-
-public class InventoryDbConnection
+namespace GinSki.MongoDB
 {
-    public static void AddToDatabase(Inventory inventory)
+    public class InventoryDbConnection
     {
-        var client = new MongoClient("mongodb://localhost");
-        var database = client.GetDatabase("GinSki");
-        var collection = database.GetCollection<Inventory>("Inventory");
-        collection.InsertOne(inventory);
-    }
-    
-    public static Inventory GetInventoryByName(String name)
-    {
-        var client = new MongoClient("mongodb://localhost");
-        var database = client.GetDatabase("GinSki");
-        var collection = database.GetCollection<Inventory>("Inventory");
-        Inventory inventory = collection.Find(x => x.Name == name).FirstOrDefault();
-            
-        if (inventory == null)
+        public static void AddToDatabase(Inventory inventory)
         {
-            return null;
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("GinSki");
+            var collection = database.GetCollection<Inventory>("Inventory");
+            collection.InsertOne(inventory);
         }
-        return inventory;
-    }
-    
-    
-    public static Inventory GetInventoryByIdType(int idTypeInventory)
-    {
-        var client = new MongoClient("mongodb://localhost");
-        var database = client.GetDatabase("GinSki");
-        var collection = database.GetCollection<Inventory>("Inventory");
-        Inventory inventory = collection.Find(x => x.IdTypeInverory == idTypeInventory).FirstOrDefault();
-            
-        if (inventory == null)
-        {
-            return null;
-        }
-        return inventory;
-    }
-    
-    public static void UpdateInventory(Inventory inventory)
-    {
-        var client = new MongoClient("mongodb://localhost");
-        var database = client.GetDatabase("GinSki");
-        var collection = database.GetCollection<Inventory>("Inventory");
-        var b = collection.ReplaceOne(x => x.Name == inventory.Name, inventory).ModifiedCount > 0;
-    }
-    
-    public static List<Inventory> GetListInventory()
-    {
-        var client = new MongoClient("mongodb://localhost");
-        var database = client.GetDatabase("GinSki");
-        var collection = database.GetCollection<Inventory>("Inventory");
 
-        List<Inventory> inventories = new List<Inventory>();
-            
-        try
+        public static Inventory GetInventoryByName(String name)
         {
-            inventories = collection.Find(x => x.Name  != "").ToList();
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("GinSki");
+            var collection = database.GetCollection<Inventory>("Inventory");
+            Inventory inventory = collection.Find(x => x.Name == name).FirstOrDefault();
+
+            if (inventory == null)
+            {
+                return null;
+            }
+
+            return inventory;
         }
-        catch (Exception e)
+
+
+        public static Inventory GetInventoryByIdType(int idTypeInventory)
         {
-            inventories = null;
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("GinSki");
+            var collection = database.GetCollection<Inventory>("Inventory");
+            Inventory inventory = collection.Find(x => x.IdTypeInverory == idTypeInventory).FirstOrDefault();
+
+            if (inventory == null)
+            {
+                return null;
+            }
+
+            return inventory;
         }
-            
-        if (inventories == null)
+
+        public static void UpdateInventory(Inventory inventory)
         {
-            return null;
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("GinSki");
+            var collection = database.GetCollection<Inventory>("Inventory");
+            var b = collection.ReplaceOne(x => x.Name == inventory.Name, inventory).ModifiedCount > 0;
         }
-        return inventories;
+
+        public static List<Inventory> GetListInventory()
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("GinSki");
+            var collection = database.GetCollection<Inventory>("Inventory");
+
+            List<Inventory> inventories = new List<Inventory>();
+
+            try
+            {
+                inventories = collection.Find(x => x.Name != "").ToList();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+
+            if (inventories.Count == 0)
+            {
+                return null;
+            }
+
+            return inventories;
+        }
     }
 }
