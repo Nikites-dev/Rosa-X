@@ -1,5 +1,6 @@
 ﻿@using GinSki.Models
 @using System.Linq.Expressions
+@using GinSki.MongoDB
 
 <h3>Оформление скипасса</h3>
 <i class="fa-user"></i>
@@ -24,7 +25,7 @@
             {
                 <div>
                     <input class="inputSearch" @bind="text" @bind:event="oninput" @onkeyup="SearchChanged">
-                    @if (listClients != null || listClients.Count == 0)
+                    @if (listClients != null)
                     {
                         <div class="headerClients">
                             <p>Фамилия</p>
@@ -66,33 +67,33 @@
             <div class="cardClient">
                 <div class="cardClientRow">
                     <p>Фамилия:</p>
-                    <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.LName"/>
+                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.LName"/>
                 </div>
                 <div class="cardClientRow">
                     <p>Имя:</p>
-                    <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.FName"/>
+                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.FName"/>
                 </div>
                 <div class="cardClientRow">
                     <p>Отчество:</p>
-                     <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.PName"/>
+                     <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.PName"/>
                 </div>
 
                 <div class="cardClientRow">
                     <p>Дата рождения:</p>
-                     <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.DateBirth"/>
+                     <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.DateBirth"/>
                 </div>
 
                 <div class="cardClientRow">
                     <p>Email:</p>
-                    <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.Email"/>
+                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.Email"/>
                 </div>
                 
                 
                 <div class="cardClientRow">
                     <p>Телефон:</p>
-                    <input disabled="@(isNewClient ? false : true)" class="inputUser" @bind-value="@crntClient.Phone"/>
+                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.Phone"/>
                 </div>
-                @if (isNewClient)
+                @if (isExtensionSkipass)
                 {
                     <button @onclick="AddNewClient">Добавить</button>    
                 }
@@ -163,22 +164,27 @@
         </div>
     </div>
     <div>
-        <button>Apply</button>
+        <button @onclick="@ApplyChanges">Apply</button>
     </div>
 </div>
 
 @code {
     Skipass _skipass;
     List<Client> listClients = new List<Client>();
-    Client client = new Client();
-    Client client2 = new Client();
-    Client client3 = new Client();
-    bool isNewClient = true;
+    
     bool isShowCardUsers = true;
     String text = "ff";
     Client crntClient = new Client();
 
-
+    // new client data
+    String lName = "";
+    String fName = "";
+    String pName = "";
+    DateTime dateBirth;
+    String phone = "";
+    String email = "";
+    
+    
     [Parameter]
     public bool isExtensionSkipass { get; set; }
     
@@ -190,53 +196,22 @@
 
     protected override void OnInitialized()
     {
-        DateTime date = Convert.ToDateTime("2020-12-31");
+        // DateTime date = Convert.ToDateTime("2020-12-31");
 
-        Skipass skipass = new Skipass();
-        skipass.CountDescents = 34;
-        skipass.StartDateTime = DateTime.Now;
-        skipass.EndDateTime = DateTime.Now + TimeSpan.FromHours(2360);
+        // Skipass skipass = new Skipass();
+        // skipass.CountDescents = 34;
+        // skipass.StartDateTime = DateTime.Now;
+        // skipass.EndDateTime = DateTime.Now + TimeSpan.FromHours(2360);
         
-        client.FName = "Victor";
-        client.LName = "Victorov";
-        client.PName = "Victorovich";
-        client.Email = "petrovnx@gmail.com";
-        client.Phone = "+79968508410";
-        client.Skipass = null;
-        client.DateBirth = date;
-        client.InventoryRental = null;
-
-        client2.FName = "Maxim";
-        client2.LName = "Ivanov";
-        client2.PName = "Eduardovich";
-        client2.Email = "maxiven@gmail.com";
-        client2.Phone = "+7935348573";
-        client2.Skipass = skipass;
-        client2.DateBirth = DateTime.Now;
-        client2.InventoryRental = null;
+        listClients = UserDbConnection.GetListClient();
         
-        client3.FName = "Vasya";
-        client3.LName = "Ershov";
-        client3.PName = "Vladislovovich";
-        client3.Email = "ershich@mail.ru";
-        client3.Phone = "+7973847385";
-        client3.Skipass = null;
-        client3.DateBirth = Convert.ToDateTime("2022-04-23");
-        client3.InventoryRental = null;
-        
-        listClients.Add(client);
-        listClients.Add(client2);
-        listClients.Add(client3);
-
-
         ChangeElemetsUserReg();
     }
 
     void ChangeElemetsUserReg()
     {
-        isNewClient = isExtensionSkipass;
 
-        if (isNewClient)
+        if (isExtensionSkipass)
         {
             SelectNewClient();
             
@@ -249,36 +224,35 @@
 
     private void SearchChanged()
     {
-        
+        if (listClients == null)
+        {
+            return;
+        }
+
         if (text == "")
         {
             listClients.Clear();
-            listClients.Add(client);
-            listClients.Add(client2);
-            listClients.Add(client3);
+            listClients = UserDbConnection.GetListClient();
         }
         else
         {
             listClients.Clear();
-            listClients.Add(client);
-            listClients.Add(client2);
-            listClients.Add(client3);
-            
-            
+            listClients = UserDbConnection.GetListClient();
+
             listClients = listClients.Where(
-                x => x.LName.Contains(text) || 
-                x.FName.Contains(text) || 
-                x.PName.Contains(text) ||
-                x.Email.Contains(text) ||
-                x.Phone.Contains(text) ||
-                x.DateBirth.ToShortDateString().Contains(text)
-                ).ToList();
+            x => x.LName.Contains(text) || 
+            x.FName.Contains(text) || 
+            x.PName.Contains(text) ||
+            x.Email.Contains(text) ||
+            x.Phone.Contains(text) ||
+            x.DateBirth.ToShortDateString().Contains(text)
+            ).ToList();
         }
     }
 
     void ShowListClient()
     {
-        isNewClient = false;
+        isExtensionSkipass = false;
         isShowCardUsers = true;
     }
 
@@ -299,8 +273,7 @@
 
     void SelectNewClient()
     {
-        isNewClient = true;
-
+        isExtensionSkipass = true;
         Client newClient = new Client();
         crntClient = newClient;
         isShowCardUsers = false;
@@ -308,15 +281,49 @@
     
     void AddNewClient()
     {
-        isNewClient = false;
-        isShowCardUsers = false;
+        if (crntClient.LName == null || crntClient.FName == null || crntClient.PName == null || crntClient.Phone == null || crntClient.Email == "")
+        {
+            return;
+        }
         
+        if (crntClient.LName == "" || crntClient.FName == "" || crntClient.PName == "" || crntClient.Phone == "" || crntClient.Email == "")
+        {
+            return;
+        }
+        
+        isExtensionSkipass = false;
+        isShowCardUsers = false;
+
         
         Skipass newSkipass = new Skipass();
         newSkipass.CountDescents = 0;
+        crntClient.Skipass = newSkipass;
 
-        crntClient.Skipass = newSkipass; 
+        InventoryRental newInventoryRental = new InventoryRental();
+        List<Inventory> inventories = new List<Inventory>();
+        newInventoryRental.listInventory = inventories;
+        newInventoryRental.DateArend = DateTime.Now;
+        crntClient.InventoryRental = newInventoryRental;
         
-        text = crntClient.Email;
     }
+
+    void ApplyChanges()
+    {
+        if (crntClient == null)
+        {
+            return;
+        }
+
+        if (isExtensionSkipass)
+        {
+            UserDbConnection.AddToDatabase(crntClient);    
+        }
+        else
+        {
+            UserDbConnection.UpdateClient(crntClient);
+        }
+
+
+    }
+
 }

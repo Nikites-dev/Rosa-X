@@ -19,7 +19,6 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton<BehaviourService>();
 
-
 builder.Services.AddSingleton<Admin>();
 builder.Services.AddSingleton<Client>();
 builder.Services.AddSingleton<InvertoryType>();
