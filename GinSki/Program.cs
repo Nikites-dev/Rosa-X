@@ -32,7 +32,10 @@ builder.Services.AddSingleton<HeaderMenu>();
 builder.Services.AddSingleton<ActiveGuest>();
 builder.Services.AddSingleton<SignIn>();
 builder.Services.AddSingleton<RentalInventory>();
+builder.Services.AddSingleton<InventoryComponent>();
 builder.Services.AddSingleton<AddInventory>();
+
+
 
 var app = builder.Build();
 

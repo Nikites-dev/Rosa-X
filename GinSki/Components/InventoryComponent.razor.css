@@ -1,0 +1,54 @@
+﻿* {
+    margin: 0;
+    Padding: 0;
+}
+
+.card {
+    display: flex;
+    background: lightslategray;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin: 3px auto;
+}
+
+.content1 {
+    display: flex;
+    background: lightskyblue;
+    width: 100%;
+    margin: 3px;
+}
+
+.content1 p {
+    margin: 3px;
+}
+
+
+.content2 {
+    display: flex;
+    align-items: center;
+    background: lightgoldenrodyellow;
+    flex-direction: column;
+    width: 100%;
+}
+
+.tableHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+}
+
+.tableContent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background: lightgrey;
+}
+
+.tableRow {
+    display: flex;
+    align-items: center;
+    flex-direction: row
+}

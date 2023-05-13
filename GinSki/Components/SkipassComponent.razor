@@ -1,6 +1,7 @@
 ﻿@using GinSki.Models
 @using System.Linq.Expressions
 @using GinSki.MongoDB
+@inject InventoryComponent InventoryComponent
 
 <h3>Оформление скипасса</h3>
 <i class="fa-user"></i>
@@ -8,17 +9,17 @@
 <span class="fa-apple"></span>
 
 <div class="card">
-    
+
     <div>
         @if (isAllFunctions)
         {
             <button @onclick="@ShowListClient">Выбрать</button>
-       
+
             <button @onclick="@SelectNewClient">Новый</button>
         }
-        
+
     </div>
-    
+
     <div class="cardUser">
         <div class="boxUsers" hidden="@(isShowCardUsers ? false : true)">
             @if (isShowCardUsers)
@@ -35,16 +36,16 @@
                             <p>телефон</p>
                             <p>Email</p>
                         </div>
-                        
+
                         @foreach (var item in listClients)
                         {
                             <button class="rowClientsBtn" @onclick="() => SelectClient(item)">
-                                    <p>@item.LName</p>
-                                    <p>@item.FName</p>
-                                    <p>@item.PName</p>    
-                                    <p>@item.DateBirth.ToShortDateString()</p>    
-                                    <p>@item.Phone</p>    
-                                    <p>@item.Email</p>    
+                                <p>@item.LName</p>
+                                <p>@item.FName</p>
+                                <p>@item.PName</p>
+                                <p>@item.DateBirth.ToShortDateString()</p>
+                                <p>@item.Phone</p>
+                                <p>@item.Email</p>
                             </button>
                         }
                     }
@@ -75,65 +76,87 @@
                 </div>
                 <div class="cardClientRow">
                     <p>Отчество:</p>
-                     <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.PName"/>
+                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.PName"/>
                 </div>
 
                 <div class="cardClientRow">
                     <p>Дата рождения:</p>
-                     <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.DateBirth"/>
+                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.DateBirth"/>
                 </div>
 
                 <div class="cardClientRow">
                     <p>Email:</p>
                     <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.Email"/>
                 </div>
-                
-                
+
+
                 <div class="cardClientRow">
                     <p>Телефон:</p>
                     <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.Phone"/>
                 </div>
                 @if (isExtensionSkipass)
                 {
-                    <button @onclick="AddNewClient">Добавить</button>    
+                    <button @onclick="AddNewClient">Добавить</button>
                 }
-                
+
             </div>
 
             <div class="cardClient">
-                
+
                 @if (@isRentalInventory)
                 {
-                    <p>Аренда инвентаря</p>
-                    <div class="cardClientRow">
-                        <p>Доступный инвентарь:</p>
-                        @if (@crntClient.Skipass != null)
-                        {
-                            <input class="inputUser" @bind-value="@crntClient.Skipass.CountDescents"/>
-                        }
+                    <div class="rental">
+                        <div class="rentalContent1">
+                            <p>Аренда инвентаря</p>
 
-                    </div>
+                            <div>
+                                <button @onclick="@ShowInventory">Выбрать</button>
+                            </div>
+                        </div>
 
-                    <div class="cardClientRow">
-                        <button>Выбрать</button>
-                    </div>
-                    
-                    <div class="cardClientRow">
-                        <p>Дейтсвие скиппаса</p>
-                        @if (@crntClient.InventoryRental != null)
-                        {
-                            <div>
-                                <p>Цена за час</p>
-                                <p>@crntClient.InventoryRental.listInventory.Count.ToString())</p>
-                            </div>
-                            
-                            <div>
-                                <p>Время</p>
-                                <p>@crntClient.InventoryRental.DateArend.Date.ToShortDateString()</p>
-                            </div>
-                            <p></p>
-                        }
-                        @**  <p>01.01.2023 – 01.01.2024</p> **@
+
+                        <div class="rentalContent2">
+                            <p>Доступный инвентарь:</p>
+                            @if (@crntClient.InventoryRental != null)
+                            {
+                                @if (@crntClient.InventoryRental.listInventory != null)
+                                {
+                                    <div class="rentalHeader">
+                                        <div>№</div>
+                                        <div>Тип</div>
+                                        <div>Размер</div>
+                                        <div>Цена за час</div>
+                                        <div>Действие</div>
+                                    </div>
+                                    // foreach
+                                        
+                                    <div class="rentalRow">
+                                        <div>
+                                            <p>#1</p>
+                                        </div>
+                                            
+                                        <div>
+                                            <p>Лыжи</p>
+                                        </div>
+                                            
+                                        <div>
+                                            <p>175</p>
+                                        </div>
+
+                                        <div>
+                                            <p>@crntClient.InventoryRental.listInventory.Count.ToString())</p>
+                                        </div>
+
+                                        <div>
+                                            <p>@crntClient.InventoryRental.DateArend.Date.ToShortDateString()</p>
+                                        </div>
+                                    </div>
+                                }
+                                    @**  <p>01.01.2023 – 01.01.2024</p> **@
+                              
+                            }
+
+                        </div>
                     </div>
                 }
                 else
@@ -158,8 +181,8 @@
                         @**  <p>01.01.2023 – 01.01.2024</p> **@
                     </div>
                 }
-                
-                
+
+
             </div>
         </div>
     </div>
@@ -168,9 +191,16 @@
     </div>
 </div>
 
+@if (isShowInventory)
+{
+    <InventoryComponent></InventoryComponent>    
+}
+
 @code {
     Skipass _skipass;
     List<Client> listClients = new List<Client>();
+
+    bool isShowInventory = false;
     
     bool isShowCardUsers = true;
     String text = "ff";
@@ -183,38 +213,36 @@
     DateTime dateBirth;
     String phone = "";
     String email = "";
-    
-    
+
+
     [Parameter]
     public bool isExtensionSkipass { get; set; }
-    
+
     [Parameter]
     public bool isAllFunctions { get; set; }
-    
+
     [Parameter]
     public bool isRentalInventory { get; set; }
 
     protected override void OnInitialized()
     {
-        // DateTime date = Convert.ToDateTime("2020-12-31");
+    // DateTime date = Convert.ToDateTime("2020-12-31");
 
-        // Skipass skipass = new Skipass();
-        // skipass.CountDescents = 34;
-        // skipass.StartDateTime = DateTime.Now;
-        // skipass.EndDateTime = DateTime.Now + TimeSpan.FromHours(2360);
-        
+    // Skipass skipass = new Skipass();
+    // skipass.CountDescents = 34;
+    // skipass.StartDateTime = DateTime.Now;
+    // skipass.EndDateTime = DateTime.Now + TimeSpan.FromHours(2360);
+
         listClients = UserDbConnection.GetListClient();
-        
+
         ChangeElemetsUserReg();
     }
 
     void ChangeElemetsUserReg()
     {
-
         if (isExtensionSkipass)
         {
             SelectNewClient();
-            
         }
         else
         {
@@ -240,14 +268,19 @@
             listClients = UserDbConnection.GetListClient();
 
             listClients = listClients.Where(
-            x => x.LName.Contains(text) || 
-            x.FName.Contains(text) || 
-            x.PName.Contains(text) ||
-            x.Email.Contains(text) ||
-            x.Phone.Contains(text) ||
-            x.DateBirth.ToShortDateString().Contains(text)
-            ).ToList();
+                x => x.LName.Contains(text) ||
+                     x.FName.Contains(text) ||
+                     x.PName.Contains(text) ||
+                     x.Email.Contains(text) ||
+                     x.Phone.Contains(text) ||
+                     x.DateBirth.ToShortDateString().Contains(text)
+                ).ToList();
         }
+    }
+
+    void ShowInventory()
+    {
+        isShowInventory = true;
     }
 
     void ShowListClient()
@@ -278,23 +311,23 @@
         crntClient = newClient;
         isShowCardUsers = false;
     }
-    
+
     void AddNewClient()
     {
         if (crntClient.LName == null || crntClient.FName == null || crntClient.PName == null || crntClient.Phone == null || crntClient.Email == "")
         {
             return;
         }
-        
+
         if (crntClient.LName == "" || crntClient.FName == "" || crntClient.PName == "" || crntClient.Phone == "" || crntClient.Email == "")
         {
             return;
         }
-        
+
         isExtensionSkipass = false;
         isShowCardUsers = false;
 
-        
+
         Skipass newSkipass = new Skipass();
         newSkipass.CountDescents = 0;
         crntClient.Skipass = newSkipass;
@@ -304,7 +337,6 @@
         newInventoryRental.listInventory = inventories;
         newInventoryRental.DateArend = DateTime.Now;
         crntClient.InventoryRental = newInventoryRental;
-        
     }
 
     void ApplyChanges()
@@ -316,14 +348,13 @@
 
         if (isExtensionSkipass)
         {
-            UserDbConnection.AddToDatabase(crntClient);    
+            UserDbConnection.AddToDatabase(crntClient);
         }
         else
         {
             UserDbConnection.UpdateClient(crntClient);
         }
-
-
     }
-
 }
+
+
