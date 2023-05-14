@@ -7,22 +7,19 @@
 @inject NavigationManager NavigationManager 
 
 <div class="field">
-    <div class="card">
+    <div class="cardInvent">
 
         <div class="content1">
-           
-                <p>Добавлене инвертаря</p>
-                
-        
+            <p>Добавлене инвентаря</p>
         </div>
 
         <div class="content2">
             <div class="row">
                 <p>Тип инвентаря</p>
-                 @if (listInventory != null || listInventory.Count != 0)
+                @if (listInventory != null || listInventory.Count != 0)
                 {
                     <select class="selectInterest" @bind="@selectInventory">
-                         <option value="">Choose a community</option>
+                        <option value="">Выбрать</option>
                         @foreach (var interest in listInventory)
                         {
                             <option value="@interest">@interest</option>
@@ -48,15 +45,12 @@
             </div>
             
             <div class="row">
-              <button @onclick="@CreateInv">Add</button>
+                <button @onclick="@CreateInv">Добавить</button>
             </div>
-            
-
-
         </div>
-
-
+           <hr class="rounded">
     </div>
+ 
 </div>
 
 @code {

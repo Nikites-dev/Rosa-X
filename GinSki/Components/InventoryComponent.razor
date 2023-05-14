@@ -13,6 +13,9 @@
         </div>
 
         <div class="content1">
+            
+            <p>Инвентарь</p>
+
             @if (listInventoryType != null || listInventoryType.Count != 0)
             {
                 <select class="selectInterest" @onchange="@SortChanged">
@@ -22,18 +25,17 @@
                         <option value="@interest">@interest</option>
                     }
                 </select>
-                
             }
-            
-             <button class="tableRow" hidden="@(@IsAddUserInventory?false:true)" @onclick="(() => OnCloseChanged())">X</button>
+
+            <button class="tableRow" hidden="@(@IsAddUserInventory ? false : true)" @onclick="(() => OnCloseChanged())">X</button>
         </div>
 
         <div class="content2">
-            <div class="tableHeader">
-                <p style="width: 50px">№</p>
+            <div class="tableHeaderInvent">
                 <p style="width: 200px">Тип инвентаря</p>
                 <p style="width: 200px">Название</p>
-                <p>цена за час</p>  
+                <p style="width: 200px">Размер</p>
+                <p style="width: 200px">цена за час</p>  
             </div>
 
             <div class="tableContent">
@@ -41,11 +43,13 @@
                 {
                     @foreach (var item in listInventory)
                     {
-                        <button class="tableRow" disabled="@(@IsAddUserInventory?false:true)" @onclick="() => SelectInventory(item)">
+                        <button class="btnRow" disabled="@(@IsAddUserInventory?false:true)" @onclick="() => SelectInventory(item)">
                             <p style="width: 200px">@InvertoryType.listTypesInverory[item.IdTypeInverory]</p>
                             <p style="width: 200px">@item.Name</p>
-                            <p>@item.PriceOfHour.ToString() p.</p>
+                            <p style="width: 200px">@item.HeightSize</p>
+                            <p style="width: 200px">@item.PriceOfHour.ToString() p.</p>
                         </button>
+                        <hr class="rounded">
                     }
                 }
             </div>
@@ -65,7 +69,8 @@
                             <button class="tableRow" disabled="@(@IsAddUserInventory ? false : true)" @onclick="() => UnselectInventory(item)">
                                 <p style="width: 200px">@InvertoryType.listTypesInverory[item.IdTypeInverory]</p>
                                 <p style="width: 200px">@item.Name</p>
-                                <p>@item.PriceOfHour.ToString() p.</p>
+                                <p style="width: 200px">@item.HeightSize</p>
+                                <p style="width: 200px">@item.PriceOfHour.ToString() p.</p>
                             </button>
                         }
                     }

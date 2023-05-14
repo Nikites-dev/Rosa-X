@@ -10,11 +10,17 @@
     flex-direction: column;
     height: 55px;
     width: 100%;
-    background: lightgreen;
+    background: #5e76e7;
 }
 
 .block {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.pHeader {
+    font-size: 20px;
+    color: white;
+    letter-spacing: 2px;
 }

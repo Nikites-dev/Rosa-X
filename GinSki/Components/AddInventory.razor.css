@@ -1,14 +1,14 @@
 ﻿* {
     margin: 0;
     padding: 0;
+    color: #1a1e21;
 }
 
 .field {
     display: flex;
     margin: 3px;
     width: 100%;
-    height: 100px;
-   background: lightskyblue;
+    height: 150px;
     align-items: start;
     justify-content: start;
     flex-direction: row;
@@ -17,27 +17,73 @@
 .content1 {
     display: flex;
     flex-direction: column;
-    background: lightgoldenrodyellow;
     flex-direction: row;
+    margin: 10px;
+}
+
+.content1 p {
+    font-size: 18px;
+    font-weight: bold;
+    
 }
 
 .content2 {
     display: flex;
     flex-direction: column;
-    background: lightsteelblue;
+    background: #5e76e7;
+    border-radius: 10px;
+    margin: 10px;
     flex-direction: row;
 }
 
-.card {
+.cardInvent {
     display: flex;
     flex-direction: column;
-    background: lightsalmon;
     flex-direction: column;
 }
 
 .row {
     display: flex;
     flex-direction: row;
-    background: lightsteelblue;
-    margin: 3px;
+    align-items: end;
+    margin: 5px;
+}
+
+.row p {
+    font-weight: normal;
+    color: white;
+}
+
+/*.row:nth-child(3) {*/
+/*    width: 100px;*/
+/*}*/
+
+input {
+    height: 30px;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+select {
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.row button {
+    width: 100px;
+    height: 30px;
+    border: white;
+    background: white;
+    border-radius: 5px;
+}
+
+hr.rounded {
+    border-top: 2px solid #bbb;
+    border-radius: 5px;
+    margin: 10px auto;
+    width: 98%;
 }

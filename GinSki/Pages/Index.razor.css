@@ -1,33 +1,61 @@
 ﻿* {
     margin: 0;
     padding: 0;
-    background: #e3c5c5;
+    color: #1a1e21;
 }
 
 
-.Content {
+.ContentAdmin {
     display: flex;
     flex-direction: column;
-    background: lightgreen;
     margin:100px auto;
-    align-items: start;
-    width: 70%;
+    align-items: center;
+    width:500px;
+    height: 500px;
+  
 }
 
-.card {
+.cardAdmin {
     display: flex;
-    background: lightsteelblue;
+    flex-direction: column;
+    background: white;
     margin: 3px;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+
+    -webkit-box-shadow: 0px 0px 27px -2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 27px -2px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 27px -2px rgba(34, 60, 80, 0.2);
+}
+
+.pHeader {
+    text-align: center;
+    font-size: 20px;
+    margin: 20px 0;
 }
 
 .cardRow {
     display: flex;
     flex-direction: row;
-    margin: 10px 3px;
-    background: lightpink;
+    margin: 10px 23px;
+    
 }
 
-.cardRow p:first-child{
+.cardRow p:first-child {
+    font-weight: bold;
     display: flex;
     width: 150px;
+}
+
+.cardRow p:last-child{
+ color: #1a1e21;
+}
+
+/* Rounded border */
+hr.rounded {
+    border-top: 2px solid #bbb;
+    border-radius: 5px;
+    margin: 0 auto;
+    width: 91%;
 }
