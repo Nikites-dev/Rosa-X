@@ -3,18 +3,33 @@
     Padding: 0;
 }
 
-.card {
+.fon {
+    display: flex;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 100px;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+.cardInvent  {
     display: flex;
     background: lightslategray;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    flex-direction: column;
     width: 50%;
-    margin: 3px auto;
+    height: 500px;
+    margin: auto;
 }
 
 .content1 {
     display: flex;
-    background: lightskyblue;
+    background: #b1fa87;
     width: 100%;
     margin: 3px;
 }
