@@ -1,366 +1,397 @@
-﻿@using GinSki.Models
-@using System.Linq.Expressions
-@using GinSki.MongoDB
-@inject InventoryComponent InventoryComponent
+﻿    @using GinSki.Models
+    @using System.Linq.Expressions
+    @using GinSki.MongoDB
+    @inject InventoryComponent InventoryComponent
 
-<h3>Оформление скипасса</h3>
-<i class="fa-user"></i>
-<h2>@text</h2>
-<span class="fa-apple"></span>
 
-<div class="card">
+    <div class="cardSkpass">
 
-    <div>
-        @if (isAllFunctions)
-        {
-            <button @onclick="@ShowListClient">Выбрать</button>
-
-            <button @onclick="@SelectNewClient">Новый</button>
-        }
-
-    </div>
-
-    <div class="cardUser">
-        <div class="boxUsers" hidden="@(isShowCardUsers ? false : true)">
-            @if (isShowCardUsers)
+        <div class="boxBtns">
+            @if (isAllFunctions)
             {
-                <div>
-                    <input class="inputSearch" @bind="text" @bind:event="oninput" @onkeyup="SearchChanged">
-                    @if (listClients != null)
-                    {
-                        <div class="headerClients">
-                            <p>Фамилия</p>
-                            <p>Имя</p>
-                            <p>Отчество</p>
-                            <p>Дата рождения</p>
-                            <p>телефон</p>
-                            <p>Email</p>
-                        </div>
-
-                        @foreach (var item in listClients)
-                        {
-                            <button class="rowClientsBtn" @onclick="() => SelectClient(item)">
-                                <p>@item.LName</p>
-                                <p>@item.FName</p>
-                                <p>@item.PName</p>
-                                <p>@item.DateBirth.ToShortDateString()</p>
-                                <p>@item.Phone</p>
-                                <p>@item.Email</p>
-                            </button>
-                        }
-                    }
-                    else
-                    {
-                        <div>
-                            <p>Добавить гостя</p>
-                        </div>
-                    }
-                </div>
-            }
-
-        </div>
-    </div>
-
-    <div class="cardApply">
-        <p>Оформление</p>
-        <div class="cardContentApply">
-            <p>Клиент</p>
-            <div class="cardClient">
-                <div class="cardClientRow">
-                    <p>Фамилия:</p>
-                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.LName"/>
-                </div>
-                <div class="cardClientRow">
-                    <p>Имя:</p>
-                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.FName"/>
-                </div>
-                <div class="cardClientRow">
-                    <p>Отчество:</p>
-                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.PName"/>
-                </div>
-
-                <div class="cardClientRow">
-                    <p>Дата рождения:</p>
-                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.DateBirth"/>
-                </div>
-
-                <div class="cardClientRow">
-                    <p>Email:</p>
-                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.Email"/>
-                </div>
-
-
-                <div class="cardClientRow">
-                    <p>Телефон:</p>
-                    <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.Phone"/>
-                </div>
-                @if (isExtensionSkipass)
+                @if (isShowCardUsers)
                 {
-                    <button @onclick="AddNewClient">Добавить</button>
-                }
-
-            </div>
-
-            <div class="cardClient">
-
-                @if (@isRentalInventory)
-                {
-                    <div class="rental">
-                        <div class="rentalContent1">
-                            <p>Аренда инвентаря</p>
-
-                            <div>
-                                <button @onclick="@ShowInventory">Выбрать</button>
-                            </div>
-                        </div>
-
-
-                        <div class="rentalContent2">
-                            <p>Доступный инвентарь:</p>
-                            @if (@crntClient.listInventory != null)
-                            {
-                                @if (@crntClient.listInventory != null)
-                                {
-                                    <div class="rentalHeader">
-                                        <div>№</div>
-                                        <div>Тип</div>
-                                        <div>Размер</div>
-                                        <div>Цена за час</div>
-                                        <div>Действие</div>
-                                    </div>
-                                    
-                                    @foreach (var item in @crntClient.listInventory)
-                                    {
-                                        <div class="rentalRow">
-                                            <div>
-                                                <p>1</p>
-                                            </div>
-                                            
-                                            <div>
-                                                <p>@item.Name</p>
-                                            </div>
-                                            
-                                            <div>
-                                                <p>@item.HeightSize</p>
-                                            </div>
-
-                                            <div>
-                                                <p>@item.PriceOfHour</p>
-                                            </div>
-
-                                            <div>
-                                                <p>@item.StartArend</p>
-                                                <p>@item.EndArend</p>
-                                            </div>
-                                        </div> 
-                                    }
-                                }
-                            }
-                        </div>
-                    </div>
+                    <button class="btnPrimary2" @onclick="@ShowListClient">Выбрать</button>
+                    <button class="btnSecondary2" @onclick="@SelectNewClient">Новый</button>
                 }
                 else
                 {
-                    <p>Скипасс</p>
-                    <div class="cardClientRow">
-                        <p>Количество спусков:</p>
-                        @if (@crntClient.Skipass != null)
-                        {
-                            <input class="inputUser" @bind-value="@crntClient.Skipass.CountDescents"/>
-                        }
+                    <button class="btnSecondary2" @onclick="@ShowListClient">Выбрать</button>
+                    <button class="btnPrimary2" @onclick="@SelectNewClient">Новый</button>
+                }
+            }
 
-                    </div>
+        </div>
 
-                    <div class="cardClientRow">
-                        <p>Дейтсвие скиппаса</p>
-                        @if (@crntClient.Skipass != null)
+        <div class="cardUser">
+            <div class="boxUsers" hidden="@(isShowCardUsers ? false : true)">
+                @if (isShowCardUsers)
+                {
+                    <div>
+                        <input class="inputSearch" @bind="text" placeholder="Найти..." @bind:event="oninput" @onkeyup="SearchChanged">
+                        @if (listClients != null)
                         {
-                            <input class="inputUser" @bind-value="@crntClient.Skipass.StartDateTime"/>
-                            <input class="inputUser" @bind-value="@crntClient.Skipass.EndDateTime"/>
+                            <div class="headerClients">
+                                <p>Фамилия</p>
+                                <p>Имя</p>
+                                <p>Отчество</p>
+                                <p>Дата рождения</p>
+                                <p>телефон</p>
+                                <p>Email</p>
+                            </div>
+
+                            <div class="scrollUser">
+                                @foreach (var item in listClients)
+                                {
+                                    <button class="rowClientsBtn" @onclick="() => SelectClient(item)">
+                                        <p>@item.LName</p>
+                                        <p>@item.FName</p>
+                                        <p>@item.PName</p>
+                                        <p>@item.DateBirth.ToShortDateString()</p>
+                                        <p>@item.Phone</p>
+                                        <p>@item.Email</p>
+                                    </button>
+                                    <hr class="rounded">
+                                }
+                                
+                            </div>
+                            <hr class="rounded2">
+                            
                         }
-                        @**  <p>01.01.2023 – 01.01.2024</p> **@
+                        else
+                        {
+                            <div>
+                                <p>Добавить гостя</p>
+                            </div>
+                        }
                     </div>
+                    
                 }
 
+            </div>
+            
+        </div>
 
+        <div class="cardApply">
+            <p class="pHeader">Оформление</p>
+            <div class="cardContentApply">
+                <div class="cardClient">
+                    <div class="cardClientRow">
+                        <p>Фамилия:</p>
+                        <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.LName"/>
+                    </div>
+                    <hr class="rounded">
+                    
+                    <div class="cardClientRow">
+                        <p>Имя:</p>
+                        <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.FName"/>
+                    </div>
+                     <hr class="rounded">
+                    
+                    <div class="cardClientRow">
+                        <p>Отчество:</p>
+                        <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.PName"/>
+                    </div>
+                    <hr class="rounded">
+                    
+                    <div class="cardClientRow">
+                        <p>Дата рождения:</p>
+                        <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.DateBirth"/>
+                    </div>
+                     <hr class="rounded">
+                    
+                    <div class="cardClientRow">
+                        <p>Email:</p>
+                        <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.Email"/>
+                    </div>
+                    <hr class="rounded">
+
+                    <div class="cardClientRow">
+                        <p>Телефон:</p>
+                        <input disabled="@(isExtensionSkipass ? false : true)" class="inputUser" @bind-value="@crntClient.Phone"/>
+                    </div>
+                    <hr class="rounded">
+                    @if (isExtensionSkipass)
+                    {
+                        <button class="addUser" hidden="@isBtnAddHidden" @onclick="AddNewClient">Добавить</button>
+                    }
+
+                </div>
+
+                <div class="cardClient">
+
+                    @if (@isRentalInventory)
+                    {
+                        <div class="rental">
+                            <div class="rentalContent1">
+                                <p class="pHeader">Аренда инвентаря</p>
+
+                                
+                                    <button class="addUser" @onclick="@ShowInventory">Выбрать</button>
+                               
+                            </div>
+
+
+                            <div class="rentalContent2">
+                               
+                                @if (@crntClient.listInventory != null)
+                                {
+                                    @if (@crntClient.listInventory != null)
+                                    {
+                                        @if (@crntClient.listInventory.Count != 0)
+                                        {
+                                            <p class="pHeader2">Текущий инвентарь</p>
+                                            <div class="headerClients">
+                                                <p>Тип</p>
+                                                <p>Размер</p>
+                                                <p>Цена за час</p>
+                                                <p>Начало</p>
+                                                <p>Окончание</p>
+                                            </div>
+
+                                            @foreach (var item in @crntClient.listInventory)
+                                            {
+                                                <div class="rowClientsBtn2">
+                                                    <div>
+                                                        <p>@item.Name</p>
+                                                    </div>
+
+                                                    <div>
+                                                        <p>@item.HeightSize</p>
+                                                    </div>
+
+                                                    <div>
+                                                        <p>@item.PriceOfHour</p>
+                                                    </div>
+
+                                                    <div class="boxRowTime">
+
+                                                        <p>@item.StartArend</p>
+                                                        <p>@item.EndArend</p>
+                                                    </div>
+                                                </div>
+                                                <hr class="rounded">
+                                            }
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="pHeader">Скипасс</p>
+                        <div class="cardClientRow">
+                            <p>Количество спусков:</p>
+                            @if (@crntClient.Skipass != null)
+                            {
+                                <input class="inputUser" @bind-value="@crntClient.Skipass.CountDescents"/>
+                            }
+
+                        </div>
+
+                        <div class="cardClientRow">
+                            <p>Дейтсвие скиппаса</p>
+                            @if (@crntClient.Skipass != null)
+                            {
+                                <div>
+                                    <p>От</p>
+                                    <input class="inputUser" @bind-value="@crntClient.Skipass.StartDateTime"/>
+                                </div>
+                                <div style="margin: 0 20px ">
+                                    <p>До</p>
+                                    <input class="inputUser" @bind-value="@crntClient.Skipass.EndDateTime"/>
+                                </div>
+                                
+                            }
+                            @**  <p>01.01.2023 – 01.01.2024</p> **@
+                        </div>
+                    }
+
+
+                </div>
             </div>
         </div>
+        <div style="margin: 5px">
+            <button class="addUser" @onclick="@ApplyChanges">Сохранить</button>
+        </div>
     </div>
-    <div>
-        <button @onclick="@ApplyChanges">Apply</button>
-    </div>
-</div>
 
-@if (isShowInventory)
-{
-    <InventoryComponent IsAddUserInventory="true" CrntClient="crntClient" onDataChanged="@OnCloseChanged"></InventoryComponent>    
-}
-
-@code {
-    Skipass _skipass;
-    List<Client> listClients = new List<Client>();
-
-    bool isShowInventory = false;
-    
-    bool isShowCardUsers = true;
-    String text = "ff";
-    Client crntClient = new Client();
-
-    // new client data
-    String lName = "";
-    String fName = "";
-    String pName = "";
-    DateTime dateBirth;
-    String phone = "";
-    String email = "";
-
-
-    [Parameter]
-    public bool isExtensionSkipass { get; set; }
-
-    [Parameter]
-    public bool isAllFunctions { get; set; }
-
-    [Parameter]
-    public bool isRentalInventory { get; set; }
-
-    protected override void OnInitialized()
+    @if (isShowInventory)
     {
-    // DateTime date = Convert.ToDateTime("2020-12-31");
-
-    // Skipass skipass = new Skipass();
-    // skipass.CountDescents = 34;
-    // skipass.StartDateTime = DateTime.Now;
-    // skipass.EndDateTime = DateTime.Now + TimeSpan.FromHours(2360);
-
-        listClients = UserDbConnection.GetListClient();
-
-        ChangeElemetsUserReg();
+        <InventoryComponent IsAddUserInventory="true" CrntClient="crntClient" onDataChanged="@OnCloseChanged"></InventoryComponent>    
     }
 
-    void ChangeElemetsUserReg()
-    {
-        if (isExtensionSkipass)
-        {
-            SelectNewClient();
-        }
-        else
-        {
-            ShowListClient();
-        }
-    }
+    @code {
+        Skipass _skipass;
+        List<Client> listClients = new List<Client>();
 
-    private void SearchChanged()
-    {
-        if (listClients == null)
-        {
-            return;
-        }
+        bool isShowInventory = false;
+        bool isShowCardUsers = true;
+        bool isBtnAddHidden = false;
+        
+        String text = "";
+        Client crntClient = new Client();
 
-        if (text == "")
+        // new client data
+        String lName = "";
+        String fName = "";
+        String pName = "";
+        DateTime dateBirth;
+        String phone = "";
+        String email = "";
+
+
+        [Parameter]
+        public bool isExtensionSkipass { get; set; }
+
+        [Parameter]
+        public bool isAllFunctions { get; set; }
+
+        [Parameter]
+        public bool isRentalInventory { get; set; }
+
+        protected override void OnInitialized()
         {
-            listClients.Clear();
-            listClients = UserDbConnection.GetListClient();
-        }
-        else
-        {
-            listClients.Clear();
+        // DateTime date = Convert.ToDateTime("2020-12-31");
+
+        // Skipass skipass = new Skipass();
+        // skipass.CountDescents = 34;
+        // skipass.StartDateTime = DateTime.Now;
+        // skipass.EndDateTime = DateTime.Now + TimeSpan.FromHours(2360);
+
             listClients = UserDbConnection.GetListClient();
 
-            listClients = listClients.Where(
-                x => x.LName.Contains(text) ||
-                     x.FName.Contains(text) ||
-                     x.PName.Contains(text) ||
-                     x.Email.Contains(text) ||
-                     x.Phone.Contains(text) ||
-                     x.DateBirth.ToShortDateString().Contains(text)
-                ).ToList();
+            ChangeElemetsUserReg();
         }
-    }
 
-    void ShowInventory()
-    {
-        isShowInventory = true;
-        StateHasChanged();
-    }
-
-    void ShowListClient()
-    {
-        isExtensionSkipass = false;
-        isShowCardUsers = true;
-    }
-
-    void SelectClient(Client client)
-    {
-        crntClient = new Client();
-        crntClient = client;
-
-        if (crntClient.Skipass == null)
+        void ChangeElemetsUserReg()
         {
+            if (isExtensionSkipass)
+            {
+                SelectNewClient();
+            }
+            else
+            {
+                ShowListClient();
+            }
+        }
+
+        private void SearchChanged()
+        {
+            if (listClients == null)
+            {
+                return;
+            }
+
+            if (text == "")
+            {
+                listClients.Clear();
+                listClients = UserDbConnection.GetListClient();
+            }
+            else
+            {
+                listClients.Clear();
+                listClients = UserDbConnection.GetListClient();
+
+                listClients = listClients.Where(
+                    x => x.LName.Contains(text) ||
+                         x.FName.Contains(text) ||
+                         x.PName.Contains(text) ||
+                         x.Email.Contains(text) ||
+                         x.Phone.Contains(text) ||
+                         x.DateBirth.ToShortDateString().Contains(text)
+                    ).ToList();
+            }
+        }
+
+        void ShowInventory()
+        {
+            isShowInventory = true;
+            StateHasChanged();
+        }
+
+        void ShowListClient()
+        {
+            isExtensionSkipass = false;
+            isShowCardUsers = true;
+            StateHasChanged();
+        }
+
+        void SelectClient(Client client)
+        {
+            crntClient = new Client();
+            crntClient = client;
+
+            if (crntClient.Skipass == null)
+            {
+                Skipass newSkipass = new Skipass();
+                newSkipass.CountDescents = 0;
+
+                crntClient.Skipass = newSkipass;
+            }
+            // isShowCardUsers = false;
+        }
+
+        void SelectNewClient()
+        {
+            isExtensionSkipass = true;
+            Client newClient = new Client();
+            crntClient = newClient;
+            isShowCardUsers = false;
+            SearchChanged();
+        }
+
+        void AddNewClient()
+        {
+            if (crntClient.LName == null || crntClient.FName == null || crntClient.PName == null || crntClient.Phone == null || crntClient.Email == "")
+            {
+                return;
+            }
+
+            if (crntClient.LName == "" || crntClient.FName == "" || crntClient.PName == "" || crntClient.Phone == "" || crntClient.Email == "")
+            {
+                return;
+            }
+
+            isExtensionSkipass = true;
+            isShowCardUsers = false;
+
+
             Skipass newSkipass = new Skipass();
             newSkipass.CountDescents = 0;
-
             crntClient.Skipass = newSkipass;
-        }
-        isShowCardUsers = false;
-    }
 
-    void SelectNewClient()
-    {
-        isExtensionSkipass = true;
-        Client newClient = new Client();
-        crntClient = newClient;
-        isShowCardUsers = false;
-    }
+         
+            List<Inventory> inventories = new List<Inventory>();
+            crntClient.listInventory = inventories;
 
-    void AddNewClient()
-    {
-        if (crntClient.LName == null || crntClient.FName == null || crntClient.PName == null || crntClient.Phone == null || crntClient.Email == "")
-        {
-            return;
+            isBtnAddHidden = true;
         }
 
-        if (crntClient.LName == "" || crntClient.FName == "" || crntClient.PName == "" || crntClient.Phone == "" || crntClient.Email == "")
+        void ApplyChanges()
         {
-            return;
+            if (crntClient == null)
+            {
+                return;
+            }
+
+            if (isExtensionSkipass)
+            {
+                UserDbConnection.AddToDatabase(crntClient);
+            }
+            else
+            {
+                UserDbConnection.UpdateClient(crntClient);
+            }
         }
-
-        isExtensionSkipass = true;
-        isShowCardUsers = false;
-
-
-        Skipass newSkipass = new Skipass();
-        newSkipass.CountDescents = 0;
-        crntClient.Skipass = newSkipass;
-
-     
-        List<Inventory> inventories = new List<Inventory>();
-        crntClient.listInventory = inventories;
-    }
-
-    void ApplyChanges()
-    {
-        if (crntClient == null)
+        
+        
+        private void OnCloseChanged(bool isClose)
         {
-            return;
-        }
-
-        if (isExtensionSkipass)
-        {
-            UserDbConnection.AddToDatabase(crntClient);
-        }
-        else
-        {
-            UserDbConnection.UpdateClient(crntClient);
+            isShowInventory = isClose;
+            StateHasChanged();
         }
     }
-    
-    
-    private void OnCloseChanged(bool isClose)
-    {
-        isShowInventory = isClose;
-        StateHasChanged();
-    }
-}
 
 

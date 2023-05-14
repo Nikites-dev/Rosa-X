@@ -4,11 +4,13 @@
     box-sizing: border-box;
 }
 
-.card {
+.cardSkpass {
     width: 1000px;
-    background: lightpink;
-    margin: 10px;
-    margin: auto;
+    margin: 10px auto;
+
+    -webkit-box-shadow: 0px 0px 27px -2px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 27px -2px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 27px -2px rgba(34, 60, 80, 0.2);
 }
 
 form {
@@ -22,32 +24,93 @@ form {
     width: 100%;
     height: 42px;
     padding-left: 10px;
-    border: 2px solid #7BA7AB;
+    border: 2px solid #5e76e7;
     border-radius: 5px;
     outline: none;
-    background: #F9F0DA;
-    color: #9E9C9C;
+    background: white;
+    color: black;
+    text-decoration: none;
+    margin-top: 10px;
 }
-
-
 
 
 .boxUsers {
     display: flex;
     flex-direction: column;
-    height: 200px;
-    overflow-y: scroll;
-    background: lightskyblue;
+
+ 
     margin: 3px;
+}
+
+.scrollUser {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 150px;
 }
 
 .rowClientsBtn {
     display: flex;
-    flex-direction: row;
-    background: lightsteelblue;
-    margin: 3px;
+    text-align: start;
+    padding: 10px;
+    border: none;
     width: 100%;
+    margin: 3px;
+    background: white;
 }
+
+.rowClientsBtn2 {
+    display: flex;
+    text-align: start;
+    align-items: center;
+    padding: 10px;
+    border: none;
+    width: 99%;
+    margin: 3px;
+    height: 50px;
+    background: #cbd9fc;
+}
+
+.rowClientsBtn2 p {
+    display: flex;
+    padding: 3px;
+    width: 130px;
+}
+
+.boxRowTime {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.rowClientsBtn:hover {
+    background: #d8ebff;
+    border-radius: 10px;
+}
+
+.rowClientsBtn:disabled {
+    color: #1a1e21;
+}
+
+.rowClientsBtn2:hover {
+    background: #d8ebff;
+    border-radius: 10px;
+}
+
+.rowClientsBtn2:disabled {
+    color: #1a1e21;
+}
+
+hr.rounded2 {
+    border-top: 4px solid #5e76e7;
+    border-radius: 5px;
+
+    margin: 10px auto;
+    width: 98%;
+}
+
+
+
+
 
 .rowClientsBtn p {
     display: flex;
@@ -57,7 +120,19 @@ form {
 
 .headerClients {
     display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: row;
+    color: white;
+    width: 100%;
+    border-radius: 10px;
+    height: 40px;
+    background: #5e76e7;
+    padding: 10px;
+    margin-top: 10px;
 }
+
+
 
 .headerClients p {
     display: flex;
@@ -68,28 +143,40 @@ form {
 .cardApply {
     display: flex;
     flex-direction: column;
-    background: #20c997;
     margin: 3px;
+}
+
+.pHeader {
+    margin: 10px 4px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #7e7e7e;
+}
+
+.pHeader2 {
+    margin: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #606060;
 }
 
 .cardClient {
     display: flex;
     flex-direction: column;
-    background: #ececaa;
+
     margin: 3px;
 }
 
 .cardContentApply {
     display: flex;
     flex-direction: column;
-    background: #dcb1d3;
-    margin: 3px;
+
 }
 
 .cardClient .cardClientRow{
     display: flex;
     flex-direction: row;
-    background: #7e9ddc;
+
     margin: 3px;
 }
 
@@ -102,6 +189,7 @@ form {
 
 .cardClientRow p {
     width: 200px;
+    font-weight: bold;
 }
 
 .cardClientRow input {
@@ -112,22 +200,27 @@ form {
 .rental {
     display: flex;
     flex-direction: column;
-    background: #1820c0;
     margin: 3px;
 }
 
 .rentalContent1 {
     display: flex;
     flex-direction: row;
-    background: #f8f8df;
+    align-items: start;
+}
+
+.rentalContent1 button {
+    margin-top: 5px;
+    margin-left: 20px;
 }
 
 
 .rentalContent2 {
     display: flex;
     flex-direction: column;
-    background: lightskyblue;
-    margin: 3px;
+    background: #cbd9fc;
+  
+    border-radius: 10px;
 }
 
 .rentalRow {
@@ -149,3 +242,56 @@ form {
     margin: 3px;
 }
 
+hr.rounded {
+    border-top: 2px solid #bbb;
+    border-radius: 5px;
+    margin: 4px auto;
+    width: 98%;
+}
+
+
+input {
+    height: 30px;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+    background: #cedaf5;
+    text-decoration: underline 2px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.addUser {
+    background: #5e76e7;
+    border: none;
+    border-radius: 999px;
+    padding: 5px 10px;
+    width: 110px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+
+.btnPrimary2 {
+    background: #5e76e7;
+    border: 2px solid #5e76e7;
+    border-radius: 999px;
+    padding: 5px 10px;
+    width: 110px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.btnSecondary2 {
+    background: white;
+    border: 2px solid #5e76e7;
+    border-radius: 999px;
+    padding: 5px 10px;
+    width: 110px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.boxBtns {
+  padding-top: 10px;
+    padding-left: 10px;
+}

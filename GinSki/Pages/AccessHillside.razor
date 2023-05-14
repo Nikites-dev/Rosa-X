@@ -3,11 +3,20 @@
 @inject SkipassComponent SkipassComponent;
 @inject RentalInventory RentalInventory
 
-<h3>AccessHillside</h3>
+<HeaderMenu Title="Допуск к склону"></HeaderMenu>
 
-<div>
-    <button @onclick="() => SwitchComponent(true)">Инвентарь</button>
-    <button @onclick="() => SwitchComponent(false)">Скиппас</button>
+<div class="boxBtns">
+    @if (isCheckSkipass)
+    {
+        <button class="btnPrimary" @onclick="() => SwitchComponent(true)">Скиппас</button>
+        <button class="btnSecondary" @onclick="() => SwitchComponent(false)">Инвентарь</button>    
+    }
+    else
+    {
+        <button class="btnSecondary" @onclick="() => SwitchComponent(true)">Скиппас</button>
+        <button class="btnPrimary" @onclick="() => SwitchComponent(false)">Инвентарь</button>
+    }
+    
 </div>
 
 

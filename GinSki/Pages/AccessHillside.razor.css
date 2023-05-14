@@ -106,3 +106,27 @@ form {
 .cardClientRow input {
 
 }
+
+.boxBtns {
+    margin: 20px;
+}
+
+.btnPrimary {
+    background: #5e76e7;
+    border: 2px solid #5e76e7;
+    border-radius: 999px;
+    padding: 5px 10px;
+    width: 110px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.btnSecondary {
+    background: white;
+    border: 2px solid #5e76e7;
+    border-radius: 999px;
+    padding: 5px 10px;
+    width: 110px;
+    color: black;
+    margin-bottom: 10px;
+}
