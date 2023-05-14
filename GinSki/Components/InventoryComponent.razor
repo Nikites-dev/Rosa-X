@@ -27,7 +27,7 @@
                 </select>
             }
 
-            <button class="tableRow" hidden="@(@IsAddUserInventory ? false : true)" @onclick="(() => OnCloseChanged())">X</button>
+                <button class="btnExit" hidden="@(@IsAddUserInventory ? false : true)" @onclick="(() => OnCloseChanged())">╳</button>
         </div>
 
         <div class="content2">
@@ -56,39 +56,48 @@
         </div>
         @if (IsAddUserInventory)
         {
+            <hr class="rounded2">
             <div class="content4">
-                <p>Выбранные снаряжения</p>
-                <p>@CrntClient.LName</p>
-                <p>@CrntClient.FName</p>
+                <div class="headerAddInv">
+                    <p>Выбранные снаряжения</p>
+                    <p>@CrntClient.LName</p>
+                    <p>@CrntClient.FName</p>
+                </div>
+               
                 <div class="content3">
                                      
                     @if (listSelectInv != null)
                     {
                         @foreach (var item in listSelectInv)
                         {
-                            <button class="tableRow" disabled="@(@IsAddUserInventory ? false : true)" @onclick="() => UnselectInventory(item)">
+                            <button class="btnRow2" disabled="@(@IsAddUserInventory ? false : true)" @onclick="() => UnselectInventory(item)">
                                 <p style="width: 200px">@InvertoryType.listTypesInverory[item.IdTypeInverory]</p>
                                 <p style="width: 200px">@item.Name</p>
                                 <p style="width: 200px">@item.HeightSize</p>
                                 <p style="width: 200px">@item.PriceOfHour.ToString() p.</p>
                             </button>
+                            <hr class="rounded">
                         }
                     }
                 </div>
                 
-                <div>
-                    <div>
-                        <p>Начало аренды</p>
-                        <input @bind-value="@startArend"/>
+                <div class="contentBottom">
+                    <div class="contentBottom">
+                        <div class="bottomRow">
+                            <p>Начало аренды</p>
+                            <input @bind-value="@startArend"/>
+                        </div>
+    
+                        <div class="bottomRow">
+                            <p>Окончание аренды</p>
+                            <input @bind-value="@endArend"/>
+                        </div>
+                        
                     </div>
                     
+
                     <div>
-                        <p>Окончание аренды</p>
-                        <input @bind-value="@endArend"/>
-                    </div>
-                    
-                    <div>
-                        <button @onclick="@AddUserInventory">Арендовать</button>
+                        <button class="btnArend" @onclick="@AddUserInventory">Арендовать</button>
                     </div>
                 </div>
             </div>

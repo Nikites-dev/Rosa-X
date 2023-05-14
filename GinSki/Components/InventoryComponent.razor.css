@@ -1,6 +1,7 @@
 ﻿* {
     margin: 0;
     Padding: 0;
+  
 }
 
 .fon {
@@ -102,9 +103,10 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    background: #4779ff;
+
     width: 100%;
-    margin: 10px;
+    border-radius: 10px;
+    background: #cbd9fc;
     height: 200px;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -135,4 +137,93 @@ hr.rounded {
     border-radius: 5px;
     margin: 0 auto;
     width: 98%;
+}
+
+
+hr.rounded2 {
+    border-top: 4px solid #5e76e7;
+    border-radius: 5px;
+
+    margin: 10px auto;
+    width: 98%;
+}
+
+
+.headerAddInv p:nth-child(3) {
+    color: #adadad;
+}
+
+.headerAddInv p:nth-child(2) {
+    color: #adadad;
+}
+
+.btnRow2 {
+    display: flex;
+    text-align: start;
+    padding: 10px;
+    border: none;
+    width: 100%;
+    margin: 3px;
+    background: #cbd9fc;
+}
+
+
+.btnRow2:hover {
+    background: #d8ebff;
+    border-radius: 10px;
+}
+
+
+
+.content4 {
+    display: flex;
+    flex-direction: column;
+    width: 98.5%;
+    margin-top: 20px;
+
+}
+
+
+.headerAddInv {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: start;
+    justify-content: start;
+}
+
+.headerAddInv p {
+    margin: 4px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.contentBottom {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    align-items: end;
+    
+    justify-content: space-between;
+}
+
+.bottomRow:last-child{
+    margin: 0 30px;
+}
+
+.btnExit {
+    border: none;
+    background: #ececec;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.btnArend {
+    background: #5e76e7;
+    border: none;
+    border-radius: 999px;
+    padding: 5px 10px;
+    color: white;
+    margin-bottom: 10px;
 }
