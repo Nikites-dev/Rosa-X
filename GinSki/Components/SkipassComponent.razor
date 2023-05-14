@@ -117,9 +117,9 @@
 
                         <div class="rentalContent2">
                             <p>Доступный инвентарь:</p>
-                            @if (@crntClient.InventoryRental != null)
+                            @if (@crntClient.listInventory != null)
                             {
-                                @if (@crntClient.InventoryRental.listInventory != null)
+                                @if (@crntClient.listInventory != null)
                                 {
                                     <div class="rentalHeader">
                                         <div>№</div>
@@ -128,29 +128,34 @@
                                         <div>Цена за час</div>
                                         <div>Действие</div>
                                     </div>
-                                    // foreach
-                                        
-                                    <div class="rentalRow">
-                                        <div>
-                                            <p>#1</p>
-                                        </div>
+                                    
+                                    @foreach (var item in @crntClient.listInventory)
+                                    {
+                                        <div class="rentalRow">
+                                            <div>
+                                                <p>1</p>
+                                            </div>
                                             
-                                        <div>
-                                            <p>Лыжи</p>
-                                        </div>
+                                            <div>
+                                                <p>@item.Name</p>
+                                            </div>
                                             
-                                        <div>
-                                            <p>175</p>
-                                        </div>
+                                            <div>
+                                                <p>@item.HeightSize</p>
+                                            </div>
 
-                                        <div>
-                                            <p>@crntClient.InventoryRental.listInventory.Count.ToString())</p>
-                                        </div>
+                                            <div>
+                                                <p>@item.PriceOfHour</p>
+                                            </div>
 
-                                        <div>
-                                            <p>@crntClient.InventoryRental.DateArend.Date.ToShortDateString()</p>
-                                        </div>
-                                    </div>
+                                            <div>
+                                                <p>@item.StartArend</p>
+                                                <p>@item.EndArend</p>
+                                            </div>
+                                        </div> 
+                                    }
+
+                                    
                                 }
                                     @**  <p>01.01.2023 – 01.01.2024</p> **@
                               
@@ -193,7 +198,7 @@
 
 @if (isShowInventory)
 {
-    <InventoryComponent></InventoryComponent>    
+    <InventoryComponent IsAddUserInventory="true" CrntClient="crntClient"></InventoryComponent>    
 }
 
 @code {
@@ -324,7 +329,7 @@
             return;
         }
 
-        isExtensionSkipass = false;
+        isExtensionSkipass = true;
         isShowCardUsers = false;
 
 
@@ -332,11 +337,9 @@
         newSkipass.CountDescents = 0;
         crntClient.Skipass = newSkipass;
 
-        InventoryRental newInventoryRental = new InventoryRental();
+     
         List<Inventory> inventories = new List<Inventory>();
-        newInventoryRental.listInventory = inventories;
-        newInventoryRental.DateArend = DateTime.Now;
-        crntClient.InventoryRental = newInventoryRental;
+        crntClient.listInventory = inventories;
     }
 
     void ApplyChanges()

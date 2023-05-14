@@ -53,6 +53,14 @@ namespace GinSki.MongoDB
             var collection = database.GetCollection<Inventory>("Inventory");
             var b = collection.ReplaceOne(x => x.Name == inventory.Name, inventory).ModifiedCount > 0;
         }
+        
+        public static void DeleteInventory(Inventory inventory)
+        {
+            var client = new MongoClient("mongodb://localhost");
+            var database = client.GetDatabase("GinSki");
+            var collection = database.GetCollection<Inventory>("Inventory");
+            var b = collection.DeleteOne(x => x._id == inventory._id);
+        }
 
         public static List<Inventory> GetListInventory()
         {

@@ -68,7 +68,7 @@
                             </div>
 
                             <div style="width: 150px">
-                                <p>@item.InventoryRental.listInventory.Count.ToString()</p>
+                                <p>@item.listInventory.Count.ToString()</p>
                             </div>
 
 
@@ -104,17 +104,12 @@
         // inventory.Count = 200;
         // inventory.Size = 12;
         inventory.PriceOfHour = 1200;
-        
-        InventoryRental inventoryRental = new InventoryRental();
-        inventoryRental.listInventory.Add(inventory);
-        inventoryRental.listInventory.Add(inventory);
-        inventoryRental.listInventory.Add(inventory);
-        
-        inventoryRental.DateArend = DateTime.Now;
-  
 
-      
-        
+        List<Inventory> listInventory = new List<Inventory>();
+        listInventory.Add(inventory);
+        listInventory.Add(inventory);
+        listInventory.Add(inventory);
+
         Client client = new Client();
         client.FName = "Nikita";
         client.LName = "Petrov";
@@ -123,7 +118,7 @@
         client.Phone = "+79968508410";
         client.Skipass = skipass;
         client.DateBirth = DateTime.Now;
-        client.InventoryRental = inventoryRental;
+        client.listInventory = listInventory;
         
         listActiveUsers.Add(client);
         listActiveUsers.Add(client);

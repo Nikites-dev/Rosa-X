@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -21,8 +22,9 @@ namespace GinSki.Models
         [BsonIgnoreIfDefault]
         public String Email { get; set; }
         [BsonIgnoreIfDefault]
-
-        public InventoryRental InventoryRental { get; set; }
+        
+        public List<Inventory> listInventory = new List<Inventory>();
+        
         [BsonIgnoreIfDefault]
         public Skipass Skipass { get; set; }
     }

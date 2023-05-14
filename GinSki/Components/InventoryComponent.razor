@@ -8,7 +8,9 @@
 
 <div class="fon">
     <div class="cardInvent">
-        <AddInventory onDataChanged="@OnDataChanged"></AddInventory>
+        <div hidden="@IsAddUserInventory">
+            <AddInventory onDataChanged="@OnDataChanged"></AddInventory>
+        </div>
 
         <div class="content1">
             @if (listInventoryType != null || listInventoryType.Count != 0)
@@ -20,7 +22,10 @@
                         <option value="@interest">@interest</option>
                     }
                 </select>
+                
             }
+            
+             <button class="tableRow" hidden="@(@IsAddUserInventory?false:true)" @onclick="@Close">X</button>
         </div>
 
         <div class="content2">
@@ -28,7 +33,7 @@
                 <p style="width: 50px">№</p>
                 <p style="width: 200px">Тип инвентаря</p>
                 <p style="width: 200px">Название</p>
-                <p>цена за час</p>
+                <p>цена за час</p>  
             </div>
 
             <div class="tableContent">
@@ -36,15 +41,54 @@
                 {
                     @foreach (var item in listInventory)
                     {
-                        <div class="tableRow">
+                        <button class="tableRow" disabled="@(@IsAddUserInventory?false:true)" @onclick="() => SelectInventory(item)">
                             <p style="width: 200px">@InvertoryType.listTypesInverory[item.IdTypeInverory]</p>
                             <p style="width: 200px">@item.Name</p>
                             <p>@item.PriceOfHour.ToString() p.</p>
-                        </div>
+                        </button>
                     }
                 }
             </div>
         </div>
+        @if (IsAddUserInventory)
+        {
+            <div class="content4">
+                <p>Выбранные снаряжения</p>
+                <p>@CrntClient.LName</p>
+                <p>@CrntClient.FName</p>
+                <div class="content3">
+                                     
+                    @if (listSelectInv != null)
+                    {
+                        @foreach (var item in listSelectInv)
+                        {
+                            <button class="tableRow" disabled="@(@IsAddUserInventory ? false : true)" @onclick="() => UnselectInventory(item)">
+                                <p style="width: 200px">@InvertoryType.listTypesInverory[item.IdTypeInverory]</p>
+                                <p style="width: 200px">@item.Name</p>
+                                <p>@item.PriceOfHour.ToString() p.</p>
+                            </button>
+                        }
+                    }
+                </div>
+                
+                <div>
+                    <div>
+                        <p>Начало аренды</p>
+                        <input @bind-value="@startArend"/>
+                    </div>
+                    
+                    <div>
+                        <p>Окончание аренды</p>
+                        <input @bind-value="@endArend"/>
+                    </div>
+                    
+                    <div>
+                        <button @onclick="@AddUserInventory">Арендовать</button>
+                    </div>
+                </div>
+            </div>
+        }
+        
     </div>
 </div>
 
@@ -54,8 +98,19 @@
     String selectInventory = "";
     bool isShowAddInv = false;
     
+    List<Inventory> listSelectInv = new List<Inventory>();
     List<Inventory> listInventory = new List<Inventory>();
     List<String> listInventoryType = new List<String>();
+
+    DateTime startArend = DateTime.Now;
+    DateTime endArend = DateTime.Now.AddHours(1);
+    
+    
+    [Parameter]
+    public Client CrntClient { get; set; }
+
+    [Parameter]
+    public bool IsAddUserInventory { get; set; }
 
     protected override void OnInitialized()
     {
@@ -83,4 +138,40 @@
         }
     }
 
+    void SelectInventory(Inventory inventory)
+    {
+        listInventory.Remove(inventory);
+        listSelectInv.Add(inventory);
+    }
+
+    void UnselectInventory(Inventory inventory)
+    {
+        listSelectInv.Remove(inventory);
+        listInventory.Add(inventory);
+        StateHasChanged();
+    }
+    
+    void Close()
+    {
+        
+    }
+
+    void AddUserInventory()
+    {
+        if (listSelectInv == null)
+        {
+            return;
+        }
+
+        foreach (var item in listSelectInv)
+        {
+            item.StartArend = startArend;
+            item.EndArend = endArend;
+            
+            CrntClient.listInventory.Add(item);
+            InventoryDbConnection.DeleteInventory(item);
+        }
+        UserDbConnection.UpdateClient(CrntClient);
+        
+    }
 }

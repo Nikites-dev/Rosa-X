@@ -19,6 +19,10 @@ namespace GinSki.Models
         [BsonIgnoreIfDefault]
         public int PriceOfHour { get; set; }
 
+        [BsonIgnoreIfDefault]
+        public DateTime StartArend { get; set; }
+        [BsonIgnoreIfDefault]
+        public DateTime EndArend { get; set; }
 
     }
 }
