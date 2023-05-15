@@ -177,8 +177,8 @@
         {
             InventoryDbConnection.DeleteInventory(item);
             
-            item.StartArend = startArend;
-            item.EndArend = endArend;
+            item.StartArend = startArend.AddHours(3);
+            item.EndArend = endArend.AddHours(3);
             CrntClient.listInventory.Add(item);
             
         }
