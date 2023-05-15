@@ -68,5 +68,6 @@
     background: linear-gradient(183deg, rgba(75,92,170,1) 0%, rgba(75,92,170,1) 50%, rgba(61,77,152,1) 100%);
     position: fixed;
     height: 100%;
+    width: 250px;
    rotate-x: 90;
 }

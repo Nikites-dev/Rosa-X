@@ -5,6 +5,7 @@
 @inject HeaderMenu HeaderMenu
 @inject AddInventory AddInventory
 @inject InvertoryType InvertoryType
+@inject ISnackbar Snackbar
 
 <div class="fon">
     <div class="cardInvent">
@@ -183,6 +184,7 @@
             
         }
         UserDbConnection.UpdateClient(CrntClient);
+        Snackbar.Add("Sign up success!", Severity.Success, config => { config.ShowCloseIcon = false; });
     }
     
     private void OnCloseChanged()
