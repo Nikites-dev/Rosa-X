@@ -3,19 +3,13 @@
 @inject Inventory Inventory
 @inject InventoryRental InventoryRental
 
-<div class="card">
+<div class="cardActive">
     <div class="content1">
         <div class="row1">
-            <p>icon</p>
-            <p>10</p>    
+            <p>На склонеㅤ</p>
+            <b>@listActiveUsers.Count</b>    
         </div>
-        
-        <div class="row1">
-            <p>icon</p>
-            <p>10</p>    
-        </div>
-        
-        
+
     </div>
 
     <div class="content2">
@@ -25,56 +19,60 @@
             <div style="width: 50px">
                 №
             </div>
-            
-            
+
             <div style="width: 350px">
-                ФИО
+                ФИО⠀
             </div>
 
             <div style="width: 150px">
-                Телефон
+                Телефон⠀
             </div>
 
             <div style="width: 150px">
-                Скипасс
+                Скипасс⠀
             </div>
 
-            <div>
+            <div style="width: 150px">
                 Кол-во снаряжения
             </div>
 
 
         </div>
         <div class="tableContent">
-            @for(int i = 1; i <= listActiveUsers.Count; i++)
-                    {
-                        <div class="boxRow">
+            
+            @if (listActiveUsers != null)
+            {
+                @for(int i = 1; i <= listActiveUsers.Count; i++)
+                {
+                    <button class="btnRow">
                             
-                            <div style="width: 50px">
-                                 <p>@i</p>
-                            </div>
-                            
-                            <div style="width: 350px">
-                                <p>@listActiveUsers[i-1].LName</p>
-                                <p>@listActiveUsers[i-1].FName</p>
-                                <p>@listActiveUsers[i-1].PName</p>
-                            </div>
-
-                            <div style="width: 150px">
-                                <p>@listActiveUsers[i-1].Phone</p>
-                            </div>
-
-                            <div style="width: 150px">
-                                <p>@CalculateDate(listActiveUsers[i-1].Skipass.EndDateTime, listActiveUsers[i-1].Skipass.StartDateTime)</p>
-                            </div>
-
-                            <div style="width: 150px">
-                                <p>@listActiveUsers[i-1].listInventory.Count.ToString()</p>
-                            </div>
-
-
+                        <div style="width: 50px">
+                            <p>@i</p>
                         </div>
-                    }
+                            
+                        <div class="boxFIO" style="width: 350px">
+                            <p>@listActiveUsers[i-1].LName</p>ㅤ
+                            <p>@listActiveUsers[i-1].FName</p>ㅤ
+                            <p>@listActiveUsers[i-1].PName</p>
+                        </div>
+
+                        <div style="width: 150px">
+                            <p>@listActiveUsers[i-1].Phone</p>
+                        </div>
+
+                        <div style="width: 150px">
+                            <p>@CalculateDate(listActiveUsers[i-1].Skipass.EndDateTime, listActiveUsers[i-1].Skipass.StartDateTime)</p>
+                        </div>
+
+                        <div style="width: 150px">
+                            <p>@listActiveUsers[i-1].listInventory.Count.ToString()</p>
+                        </div>
+                    </button>
+                    <hr class="rounded">
+                }
+            }
+        
+           
         </div>
         
     </div>
@@ -93,7 +91,7 @@
 
     protected override void OnInitialized()
     {
-        listActiveUsers = UserDbConnection.GetListClient();
+        listActiveUsers = UserDbConnection.GetListClient().Where(x => x.listInventory.Count > 0).ToList();
       
     }
 

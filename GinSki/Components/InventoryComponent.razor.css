@@ -71,13 +71,14 @@
 
 .tableContent {
     display: flex;
-    align-items: start;
+    align-items: center;
     flex-direction: column;
     overflow-y: scroll;
     overflow-x: hidden;
     justify-content: start;
     width: 98.5%;
     margin: 3px;
+    
 }
 
 .btnRow {

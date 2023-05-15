@@ -1,5 +1,7 @@
 ﻿@page "/"
 @using GinSki.Components
+@using GinSki.Models
+@using GinSki.MongoDB
 @using GinSki.Services
 @inject BehaviourService BehaviourService
 @inject SignIn SignIn
@@ -54,5 +56,39 @@
 
 @code
 {
-   
+    protected override void OnInitialized()
+    {
+        CheckUserInventory();
+    }
+
+
+    void CheckUserInventory()
+    {
+        List<Client> users = UserDbConnection.GetListClient();
+
+        if (users == null)
+        {
+            return;
+        }
+
+        foreach (var user in users)
+        {
+            if (user.listInventory != null)
+            {
+                for (int i = 0; i < user.listInventory.Count; i++)
+                {
+                    if (user.listInventory.Count != 0)
+                    {
+                        if (DateTime.Now > user.listInventory[i].EndArend)
+                        {
+                            var crntInventory = user.listInventory[i];
+                            user.listInventory.Remove(user.listInventory[i]);
+                            UserDbConnection.UpdateClient(user);
+                            InventoryDbConnection.AddToDatabase(crntInventory);
+                        }    
+                    }
+                }
+            }
+        }
+    }
 }
