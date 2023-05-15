@@ -84,6 +84,7 @@
 .btnRow {
     display: flex;
     text-align: start;
+    justify-content: start;
     padding: 10px;
     border: none;
     width: 100%;
