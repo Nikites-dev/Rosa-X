@@ -1,10 +1,10 @@
 .navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(197, 0, 0, 0.1);
 }
 
 .top-row {
     height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    background-color: #3d4d9d;
 }
 
 .navbar-brand {
@@ -32,7 +32,7 @@
     }
 
     .nav-item ::deep a {
-        color: #d7d7d7;
+        color: #ffffff;
         border-radius: 4px;
         height: 3rem;
         display: flex;
@@ -59,4 +59,14 @@
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+}
+
+
+.NavMenuCssClass {
+
+    background: rgb(75,92,170);
+    background: linear-gradient(183deg, rgba(75,92,170,1) 0%, rgba(75,92,170,1) 50%, rgba(61,77,152,1) 100%);
+    position: fixed;
+    height: 100%;
+   rotate-x: 90;
 }
