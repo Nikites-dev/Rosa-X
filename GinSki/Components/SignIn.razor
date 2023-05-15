@@ -3,6 +3,7 @@
 
 @inject BehaviourService BehaviourService 
 @inject NavigationManager NavigationManager
+@inject ISnackbar Snackbar
 
 <div class="fon" hidden="@IsHiddenCard">
     <div class="card" >
@@ -36,9 +37,9 @@
             <button class="btnSign" @onclick="@isValidate">@titleSign</button>
         </div>
 
-        <div class="cardRow">
-            <p>Already have an account? <span style="color: #4807ed" @onclick="@ChangeSignMethod">@txtSign</span></p>
-        </div>
+        @* <div class="cardRow"> *@
+        @*     <p>Already have an account? <span style="color: #4807ed" @onclick="@ChangeSignMethod">@txtSign</span></p> *@
+        @* </div> *@
     </div>
 </div>
 
@@ -93,6 +94,7 @@
 
         CheckFields(colorBlack, colorBlack);
         ChangeSignMethod();
+        ChangePosition("Bottom-Center", Defaults.Classes.Position.BottomCenter);
     }
     
     public void isValidate()
@@ -126,28 +128,12 @@
         {
             itemColors[0] = colorBlack;
             itemColors[2] = colorBlack;
-            if (itemData[0] != "" && itemData[2] != "")
+            if (itemData[0] == "" && itemData[1] == "")
             {
-               //  userConnect.isLoginUser = UserDbConnection.GetUserByUsernamePassword(itemData[0], itemData[2]);
-
-                // if (userConnect.isLoginUser != null)
-                // {
-                //     NavigationManager.NavigateTo("profile");
-                //     IsActiveCard = true;
-                // }
-                // else
-                // {
-                //     errTitle = "error1";
-                //     errTxt = "text1";
-                //     isError = true;
-                // }
+                Snackbar.Add("Заполните все поля!", Severity.Warning, config => { config.ShowCloseIcon = false; });
+                return;
             }
-            else
-            {
-                errTitle = "error2";
-                errTxt = "text2";
-                isError = true;
-            }
+          
             
             IsHiddenCard = true;
             BehaviourService.AdminMode = true;
@@ -202,5 +188,11 @@
             hidenEmail = false;
             hidenConfirmP = false;
         }
+    }
+    
+    void ChangePosition(string message, string position)
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = position;
     }
 }

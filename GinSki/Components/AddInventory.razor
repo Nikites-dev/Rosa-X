@@ -75,6 +75,7 @@
     {
         if (selectInventory == "" || name == "" || heightSize == 0 || priceOfHour == 0)
         {
+            Snackbar.Add("Заполните все поля!", Severity.Warning, config => { config.ShowCloseIcon = false; });
             return;
         }
         
@@ -87,13 +88,12 @@
         InventoryDbConnection.AddToDatabase(inventory);   
         
         onDataChanged?.Invoke(name);
-        Snackbar.Add("Sign up success!", Severity.Success, config => { config.ShowCloseIcon = false; });
+        Snackbar.Add("Добавлено!", Severity.Success, config => { config.ShowCloseIcon = false; });
     }
     
     void ChangePosition(string message, string position)
     {
         Snackbar.Clear();
         Snackbar.Configuration.PositionClass = position;
-      
     }
 }

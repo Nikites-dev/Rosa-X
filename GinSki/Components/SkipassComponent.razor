@@ -1,8 +1,8 @@
-﻿    @using GinSki.Models
-    @using System.Linq.Expressions
-    @using GinSki.MongoDB
-    @inject InventoryComponent InventoryComponent
-
+﻿@using GinSki.Models
+@using System.Linq.Expressions
+@using GinSki.MongoDB
+@inject InventoryComponent InventoryComponent
+@inject ISnackbar Snackbar
 
     <div class="cardSkpass">
 
@@ -263,6 +263,7 @@
             listClients = UserDbConnection.GetListClient();
 
             ChangeElemetsUserReg();
+            ChangePosition("Bottom-Center", Defaults.Classes.Position.BottomCenter);
         }
 
         void ChangeElemetsUserReg()
@@ -281,6 +282,7 @@
         {
             if (listClients == null)
             {
+                Snackbar.Add("Не найдено!", Severity.Normal, config => { config.ShowCloseIcon = false; });
                 return;
             }
 
@@ -346,11 +348,13 @@
         {
             if (crntClient.LName == null || crntClient.FName == null || crntClient.PName == null || crntClient.Phone == null || crntClient.Email == "")
             {
+                Snackbar.Add("Заполните все поля!", Severity.Warning, config => { config.ShowCloseIcon = false; });
                 return;
             }
 
             if (crntClient.LName == "" || crntClient.FName == "" || crntClient.PName == "" || crntClient.Phone == "" || crntClient.Email == "")
             {
+                Snackbar.Add("Заполните все поля!", Severity.Warning, config => { config.ShowCloseIcon = false; });
                 return;
             }
 
@@ -367,6 +371,7 @@
             crntClient.listInventory = inventories;
 
             isBtnAddHidden = true;
+            Snackbar.Add("Добавлено!", Severity.Success, config => { config.ShowCloseIcon = false; });
         }
 
         void ApplyChanges()
@@ -391,6 +396,12 @@
         {
             isShowInventory = isClose;
             StateHasChanged();
+        }
+        
+        void ChangePosition(string message, string position)
+        {
+            Snackbar.Clear();
+            Snackbar.Configuration.PositionClass = position;
         }
     }
 

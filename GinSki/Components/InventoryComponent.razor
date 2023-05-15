@@ -132,6 +132,7 @@
     {
         listInventoryType = InvertoryType.listTypesInverory.ToList();
         listInventory = InventoryDbConnection.GetListInventory();
+        ChangePosition("Bottom-Center", Defaults.Classes.Position.BottomCenter);
     }
     
     private void OnDataChanged(String text)
@@ -171,6 +172,7 @@
     {
         if (listSelectInv == null)
         {
+            Snackbar.Add("Без изменений!", Severity.Normal, config => { config.ShowCloseIcon = false; });
             return;
         }
 
@@ -184,7 +186,7 @@
             
         }
         UserDbConnection.UpdateClient(CrntClient);
-        Snackbar.Add("Sign up success!", Severity.Success, config => { config.ShowCloseIcon = false; });
+        Snackbar.Add("Добавлено!", Severity.Success, config => { config.ShowCloseIcon = false; });
     }
     
     private void OnCloseChanged()
@@ -195,4 +197,10 @@
     
     [Parameter]
     public Action<bool> onDataChanged { get; set; }
+    
+    void ChangePosition(string message, string position)
+    {
+        Snackbar.Clear();
+        Snackbar.Configuration.PositionClass = position;
+    }
 }
