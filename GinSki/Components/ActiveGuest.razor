@@ -1,4 +1,5 @@
 ﻿@using GinSki.Models
+@using GinSki.MongoDB
 @inject Inventory Inventory
 @inject InventoryRental InventoryRental
 
@@ -45,30 +46,30 @@
 
         </div>
         <div class="tableContent">
-            @foreach (var item in listActiveUsers)
+            @for(int i = 1; i <= listActiveUsers.Count; i++)
                     {
                         <div class="boxRow">
                             
                             <div style="width: 50px">
-                                 <p>1</p>
+                                 <p>@i</p>
                             </div>
                             
                             <div style="width: 350px">
-                                <p>@item.LName</p>
-                                <p>@item.FName</p>
-                                <p>@item.PName</p>
+                                <p>@listActiveUsers[i-1].LName</p>
+                                <p>@listActiveUsers[i-1].FName</p>
+                                <p>@listActiveUsers[i-1].PName</p>
                             </div>
 
                             <div style="width: 150px">
-                                <p>@item.Phone</p>
+                                <p>@listActiveUsers[i-1].Phone</p>
                             </div>
 
                             <div style="width: 150px">
-                                <p>4ч. 00 мин.</p>
+                                <p>@CalculateDate(listActiveUsers[i-1].Skipass.EndDateTime, listActiveUsers[i-1].Skipass.StartDateTime)</p>
                             </div>
 
                             <div style="width: 150px">
-                                <p>@item.listInventory.Count.ToString()</p>
+                                <p>@listActiveUsers[i-1].listInventory.Count.ToString()</p>
                             </div>
 
 
@@ -92,38 +93,16 @@
 
     protected override void OnInitialized()
     {
-        skipass.CountDescents = 9;
-        skipass.StartDateTime = DateTime.Now;
-        skipass.StartDateTime = DateTime.Now;
-
-        Inventory inventory = new Inventory();
-        inventory.Name = "";
-        inventory.IdTypeInverory = 2;
-        // inventory.Count = 10;
-        // inventory.Height = 183;
-        // inventory.Count = 200;
-        // inventory.Size = 12;
-        inventory.PriceOfHour = 1200;
-
-        List<Inventory> listInventory = new List<Inventory>();
-        listInventory.Add(inventory);
-        listInventory.Add(inventory);
-        listInventory.Add(inventory);
-
-        Client client = new Client();
-        client.FName = "Nikita";
-        client.LName = "Petrov";
-        client.PName = "Sergeevic";
-        client.Email = "petrovnx@gmail.com";
-        client.Phone = "+79968508410";
-        client.Skipass = skipass;
-        client.DateBirth = DateTime.Now;
-        client.listInventory = listInventory;
-        
-        listActiveUsers.Add(client);
-        listActiveUsers.Add(client);
-        listActiveUsers.Add(client);
-        listActiveUsers.Add(client);
-        listActiveUsers.Add(client);
+        listActiveUsers = UserDbConnection.GetListClient();
+      
     }
+
+    String CalculateDate(DateTime end, DateTime start)
+    {
+        TimeSpan dt = end - start;
+        
+
+        return dt.ToString();
+    }
+
 }
